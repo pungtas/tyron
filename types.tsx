@@ -1,17 +1,23 @@
 export type RootStackParamList = {
   Root: undefined;
+  Welcome: undefined;
   NotFound: undefined;
 };
 
 export type BottomTabParamList = {
-  TabOne: undefined;
-  TabTwo: undefined;
+  "Welcome": undefined;
+  "Log into your DID": undefined;
+  "Create your DID": undefined;
 };
 
-export type TabOneParamList = {
-  TabOneScreen: undefined;
+export type WelcomeTabParamList = {
+  WelcomeTabScreen: undefined;
 };
 
-export type TabTwoParamList = {
-  TabTwoScreen: undefined;
+export type LogInTabParamList = {
+  LogInTabScreen: undefined;
+};
+
+export type CreateTabParamList = {
+  CreateTabScreen: undefined;
 };
