@@ -1,8 +1,8 @@
+import * as ReactNative from 'react-native';
 import * as React from 'react';
-import { StyleSheet, TouchableOpacity, TextInput } from 'react-native';
 
-import { Text, View } from '../components/Themed';
-import { StackScreenProps } from '@react-navigation/stack';
+import * as Themed from '../components/Themed';
+import * as ReactNavigation from '@react-navigation/stack';
 
 import * as API from '@zilliqa-js/zilliqa';
 import TyronZIL from '../src/tyronzil';
@@ -15,34 +15,34 @@ type RootParamList = {
   "LoggedIn": undefined
 }
 
-type LogInProps = StackScreenProps<RootParamList, "LogIn">
+type LogInProps = ReactNavigation.StackScreenProps<RootParamList, "LogIn">
 
 export default function LogInTabScreen({ navigation }: LogInProps) {
   const [username, setUserName] = React.useState("");
   const [privateKey, setPrivateKey] = React.useState("");
   
   return (
-    <View style={styles.container}>
-      <Text style={styles.title}>Log into testnet:</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="#008080" />  
-      <TextInput
+    <Themed.View style={Themed.styles.container}>
+      <Themed.Text style={Themed.styles.title}>Log into testnet:</Themed.Text>
+      <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />  
+      <ReactNative.TextInput
         value = {username}
-        style = {styles.inputText}
+        style = {Themed.styles.inputText}
         placeholder = "domain.did"
         onChangeText = {username => {
           setUserName(username)
         }}
       />
-      <View style={styles.separator} lightColor="#eee" darkColor="#008080" />
-      <TextInput
+      <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
+      <ReactNative.TextInput
         value = {privateKey}
-        style = {styles.inputText}
+        style = {Themed.styles.inputText}
         placeholder = "private key"
         onChangeText = {privateKey => {
           setPrivateKey(privateKey)
         }}
       />
-      <View style={styles.separator} lightColor="#eee" darkColor="#008080" />
+      <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
       <Submit
         title = {`Log into ${username}`}
         onSubmission = {async() => {
@@ -60,47 +60,12 @@ export default function LogInTabScreen({ navigation }: LogInProps) {
           
         }}
       />      
-    </View>
+    </Themed.View>
   );
 }
 
-function Submit({ title, onSubmission }) {
-  return <TouchableOpacity onPress={onSubmission} style={styles.button}>
-  <Text style={styles.buttonText}>{title}</Text>
-  </TouchableOpacity>
+function Submit({ title, onSubmission }: { title: any, onSubmission: any }) {
+  return <ReactNative.TouchableOpacity onPress={onSubmission} style={Themed.styles.button}>
+  <Themed.Text style={Themed.styles.buttonText}>{title}</Themed.Text>
+  </ReactNative.TouchableOpacity>
 }
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  title: {
-    fontSize: 30,
-    lineHeight: 40,
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 40,
-  },
-  separator: {
-    marginVertical: 10,
-    height: 1,
-    width: '80%',
-  },
-  button: {
-    margin: 30,
-    backgroundColor: '#008080',
-    padding: 10,
-    borderRadius: 20,
-  },
-  buttonText: {
-    fontSize: 30,
-    color: '#fff',
-  },
-  inputText: {
-    fontSize: 25,
-    color: 'steelblue',
-    marginBottom: 20,  
-  },
-});

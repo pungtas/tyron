@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Text as DefaultText, View as DefaultView } from 'react-native';
+import { StyleSheet, Text as DefaultText, View as DefaultView } from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
@@ -39,3 +39,39 @@ export function View(props: ViewProps) {
 
   return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
 }
+
+export const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    alignItems: 'center',
+    justifyContent: 'space-around',
+  },
+  title: {
+    fontSize: 30,
+    lineHeight: 40,
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 40,
+  },
+  separator: {
+    marginVertical: 10,
+    height: 1,
+    width: '80%',
+  },
+  button: {
+    margin: 30,
+    backgroundColor: '#008080',
+    padding: 10,
+    borderRadius: 20,
+  },
+  buttonText: {
+    fontSize: 30,
+    color: '#fff',
+  },
+  inputText: {
+    fontSize: 25,
+    color: 'steelblue',
+    marginBottom: 20,  
+  },
+});
+
