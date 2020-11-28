@@ -7,16 +7,15 @@ import * as ReactNative from 'react-native';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import WelcomeTabScreen from '../screens/WelcomeTabScreen';
-import LogInTabScreen from '../screens/LogInTabScreen';
-import CreateTabScreen from '../screens/CreateTabScreen';
-import { BottomTabParamList, WelcomeTabParamList, LogInTabParamList, CreateTabParamList } from '../types';
+import ResolverTabScreen from '../screens/ResolverTabScreen';
+import { BottomTabParamList, WelcomeTabParamList, ResolverTabParamList } from '../types';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
 export default function InitializeTabNavigator() {
   const colorScheme = useColorScheme();
 
-  return (
+  return(
       <BottomTab.Navigator
         initialRouteName="Welcome"
         tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
@@ -28,15 +27,8 @@ export default function InitializeTabNavigator() {
           }}
         />
         <BottomTab.Screen
-          name="Log into your DID"
-          component={LogInNavigator}
-          options={{
-            tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
-          }}
-        />
-        <BottomTab.Screen
-          name="Create your DID"
-          component={CreateNavigator}
+          name="Resolver"
+          component={ResolverNavigator}
           options={{
             tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
           }}
@@ -69,31 +61,17 @@ function WelcomeNavigator() {
   );
 }
 
-const LogInTabStack = createStackNavigator<LogInTabParamList>();
+const ResolverTabStack = createStackNavigator<ResolverTabParamList>();
 
-function LogInNavigator() {
+function ResolverNavigator() {
   return (
-    <LogInTabStack.Navigator>
-      <LogInTabStack.Screen
-        name="LogInTabScreen"
-        component={LogInTabScreen}
-        options={{ headerTitle: 'Log into your DID' }}
+    <ResolverTabStack.Navigator>
+      <ResolverTabStack.Screen
+        name="ResolverTabScreen"
+        component={ResolverTabScreen}
+        options={{ headerTitle: 'Resolver DID Browser' }}
       />
-    </LogInTabStack.Navigator>
-  );
-}
-
-const CreateTabStack = createStackNavigator<CreateTabParamList>();
-
-function CreateNavigator() {
-  return (
-    <CreateTabStack.Navigator>
-      <CreateTabStack.Screen
-        name="CreateTabScreen"
-        component={CreateTabScreen}
-        options={{ headerTitle: 'New DID' }}
-      />
-    </CreateTabStack.Navigator>
+    </ResolverTabStack.Navigator>
   );
 }
 

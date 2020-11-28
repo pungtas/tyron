@@ -11,48 +11,35 @@ const ZILLIQA = new API.Zilliqa('https://dev-api.zilliqa.com/');
 const INIT_TYRON = "0x63e2d8484187de4f66a571c098f3b51a793f055b";
 
 type RootParamList = {
-  "LogIn": undefined;
-  "LoggedIn": undefined
+  "Resolve": undefined;
+  "Resolved": undefined
 }
 
-type LogInProps = ReactNavigation.StackScreenProps<RootParamList, "LogIn">
+type LogInProps = ReactNavigation.StackScreenProps<RootParamList, "Resolve">
 
-export default function LogInTabScreen({ navigation }: LogInProps) {
+export default function ResolveTabScreen({ navigation }: LogInProps) {
   const [username, setUserName] = React.useState("");
-  const [privateKey, setPrivateKey] = React.useState("");
-  
+
   return (
     <Themed.View style={Themed.styles.container}>
-      <Themed.Text style={Themed.styles.title}>Log into testnet:</Themed.Text>
-      <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />  
       <ReactNative.TextInput
         value = {username}
         style = {Themed.styles.inputText}
-        placeholder = "domain.did"
+        placeholder = "username.did"
         onChangeText = {username => {
           setUserName(username)
         }}
       />
       <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
-      <ReactNative.TextInput
-        value = {privateKey}
-        style = {Themed.styles.inputText}
-        placeholder = "private key"
-        onChangeText = {privateKey => {
-          setPrivateKey(privateKey)
-        }}
-      />
-      <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
       <Submit
-        title = {`Log into ${username}`}
+        title = {`Resolve ${username}`}
         onSubmission = {async() => {
           const didcAddr = await TyronZIL.resolve(ZILLIQA, INIT_TYRON, username);
           if(typeof didcAddr === "string"){
-            const login = await TyronZIL.initialize(ZILLIQA, privateKey, username, didcAddr);
             if(login instanceof TyronZIL){
-              navigation.push("LoggedIn")
+              navigation.push("Resolved")
             } else {
-              navigation.push("LogIn")            
+              navigation.push("Resolve")            
             }
           } else {
             alert!(didcAddr);

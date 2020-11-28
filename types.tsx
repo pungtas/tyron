@@ -6,18 +6,13 @@ export type RootStackParamList = {
 
 export type BottomTabParamList = {
   "Welcome": undefined;
-  "Log into your DID": undefined;
-  "Create your DID": undefined;
+  "Resolver": undefined;
 };
 
 export type WelcomeTabParamList = {
   WelcomeTabScreen: undefined;
 };
 
-export type LogInTabParamList = {
-  LogInTabScreen: undefined;
-};
-
-export type CreateTabParamList = {
-  CreateTabScreen: undefined;
+export type ResolverTabParamList = {
+  ResolverTabScreen: undefined;
 };
