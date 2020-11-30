@@ -1,3 +1,17 @@
+/*
+    tyron.did: Self-sovereign digital identity decentralized application on the Zilliqa blockchain platform
+    Copyright (C) 2020 Julio Cesar Cabrapan Duarte
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+*/
 import * as API from '@zilliqa-js/zilliqa';
 import * as zcrypto from '@zilliqa-js/crypto';
 import * as Util from '@zilliqa-js/util';
@@ -9,6 +23,11 @@ export enum OperationType {
     Recover = "Recovered",
     Update = "Updated",
     Deactivate = "Deactivated"
+}
+
+export enum Accept {
+    contentType = "application/did+json",        //requests a DID-Document as output
+    Result = "application/did+json;profile='https://w3c-ccg.github.io/did-resolution'"        //requests a DID-Resolution-Result as output
 }
 
 /** The tyronZIL transaction class */
@@ -35,7 +54,7 @@ export default class TyronZIL {
         this.gasLimit = gasLimit
     }
 
-    public static async resolve(zilliqa: API.Zilliqa, initTyron: string, username: string): Promise<void|string> {
+    public static async getDidAddr(zilliqa: API.Zilliqa, initTyron: string, username: string): Promise<void|string> {
         const DOT_INDEX = username.lastIndexOf(".");
         const SSI_DOMAIN = username.substring(DOT_INDEX);
         const AVATAR = username.substring(0, DOT_INDEX);
@@ -57,9 +76,36 @@ export default class TyronZIL {
             return zcrypto.toBech32Address(DIDC_ADDRESS);
         }
     }
+
+    /** Resolves the tyron.did and saves it */
+    public static async resolver(network: string, didcAddr: string, resolutionChoice: number): Promise<void> {
+        let ACCEPT;
+            switch (resolutionChoice) {
+                case 1:
+                    ACCEPT = Accept.contentType                
+                    break;
+                case 2:
+                    ACCEPT = Accept.Result
+                    break;
+                default:
+                    ACCEPT = Accept.contentType
+                    break;
+            }
+
+            const RESOLUTION_INPUT = {
+                didcAddr: didcAddr,
+                metadata : {
+                    accept: ACCEPT
+                }
+            }
+            
+            /** Resolves the Tyron DID */        
+            return await DidDoc.resolution(network, RESOLUTION_INPUT)
+            .catch((err: any) => { throw err })
+    }
     
     /** Retrieves the minimum gas price & validates the account info */
-    public static async initialize(
+    public static async tyronzilInit(
         zilliqa: API.Zilliqa,
         userPrivateKey: string,
         username: string,
