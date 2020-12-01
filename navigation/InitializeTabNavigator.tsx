@@ -18,7 +18,8 @@ export default function InitializeTabNavigator() {
   return(
       <BottomTab.Navigator
         initialRouteName="Welcome"
-        tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}>
+        tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+        >
         <BottomTab.Screen
           name="Welcome"
           component={WelcomeNavigator}

@@ -21,6 +21,19 @@ import * as ReactNavigation from '@react-navigation/stack';
 
 import * as API from '@zilliqa-js/zilliqa';
 import TyronZIL from '../src/tyronzil';
+import * as Scheme from 'tyronzil-js/dist/src/lib/decentralized-identity/tyronZIL-schemes/did-scheme';
+import RadioButton from '../components/RadioButton';
+
+const NETWORK = [
+	{
+		key: 'testnet',
+		text: 'testnet',
+	},
+	{
+		key: 'mainnet',
+		text: 'mainnet',
+	}
+];
 
 const ZILLIQA = new API.Zilliqa('https://dev-api.zilliqa.com/');
 const INIT_TYRON = "0x63e2d8484187de4f66a571c098f3b51a793f055b";
@@ -37,6 +50,7 @@ export default function ResolveTabScreen({ navigation }: LogInProps) {
 
   return (
     <Themed.View style={Themed.styles.container}>
+      <RadioButton PROP={NETWORK} />
       <ReactNative.TextInput
         value = {username}
         style = {Themed.styles.inputText}
