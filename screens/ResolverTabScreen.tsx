@@ -22,7 +22,6 @@ import * as ReactNavigation from '@react-navigation/stack';
 import * as API from '@zilliqa-js/zilliqa';
 import TyronZIL from '../src/tyronzil';
 import * as Scheme from 'tyronzil-js/dist/src/lib/decentralized-identity/tyronZIL-schemes/did-scheme';
-import RadioButton from '../components/RadioButton';
 
 const NETWORK = [
 	{
@@ -32,6 +31,17 @@ const NETWORK = [
 	{
 		key: 'mainnet',
 		text: 'mainnet',
+	}
+];
+
+const RESULT = [
+	{
+		key: 'DID-Document',
+		text: 'did-document',
+	},
+	{
+		key: 'DID-Resolution',
+		text: 'did-resolution',
 	}
 ];
 
@@ -46,24 +56,68 @@ type RootParamList = {
 type LogInProps = ReactNavigation.StackScreenProps<RootParamList, "Resolve">
 
 export default function ResolveTabScreen({ navigation }: LogInProps) {
-  const [username, setUserName] = React.useState("");
-
+  const [username, setUsername] = React.useState("");
+  const [network, setNetwork] = React.useState(NETWORK);
+  const [networkState, networkSetState] = React.useState({ networkValue: null });
+  const { networkValue } = networkState;
+  const [result, setResult] = React.useState(RESULT);
+  const [resolutionState, resolutionSetState] = React.useState({ resolutionValue: null });
+  const { resolutionValue } = resolutionState;
+  
   return (
     <Themed.View style={Themed.styles.container}>
-      <RadioButton PROP={NETWORK} />
+      <Themed.View>
+        {network.map((res: { key: React.ReactText; text: any; }) => {
+					return (
+						<ReactNative.View key={res.key} style={Themed.styles.container}>
+							<ReactNative.Text style={Themed.styles.radioText}>{res.text}</ReactNative.Text>
+							<ReactNative.TouchableOpacity
+								style={Themed.styles.radioCircle}
+								onPress={() => {
+									networkSetState({
+										networkValue: res.key,
+                  });
+                  setNetwork(network);
+								}}>
+                  { networkValue === res.key && <ReactNative.View style={Themed.styles.selectedRb} />}
+							</ReactNative.TouchableOpacity>
+						</ReactNative.View>
+					);
+				})}
+      </Themed.View>
+      <Themed.View>
+        {result.map((res: { key: React.ReactText; text: any; }) => {
+					return (
+						<ReactNative.View key={res.key} style={Themed.styles.container}>
+							<ReactNative.Text style={Themed.styles.radioText}>{res.text}</ReactNative.Text>
+							<ReactNative.TouchableOpacity
+								style={Themed.styles.radioCircle}
+								onPress={() => {
+									resolutionSetState({
+										resolutionValue: res.key,
+                  });
+                  setResult(result);
+								}}>
+                  { resolutionValue === res.key && <ReactNative.View style={Themed.styles.selectedRb} />}
+							</ReactNative.TouchableOpacity>
+						</ReactNative.View>
+					);
+				})}
+      </Themed.View>
       <ReactNative.TextInput
         value = {username}
         style = {Themed.styles.inputText}
         placeholder = "Enter username.did"
         onChangeText = {username => {
-          setUserName(username)
+          setUsername(username)
         }}
       />
       <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
       <Submit
         title = {`Resolve ${username}`}
         onSubmission = {async() => {
-          const didcAddr = await TyronZIL.getDidAddr(ZILLIQA, INIT_TYRON, username);
+          
+          /*const didcAddr = await TyronZIL.getDidAddr(ZILLIQA, INIT_TYRON, username);
           if(typeof didcAddr === "string"){
             if(login instanceof TyronZIL){
               navigation.push("Resolved")
@@ -72,7 +126,7 @@ export default function ResolveTabScreen({ navigation }: LogInProps) {
             }
           } else {
             alert!(didcAddr);
-          }
+          }*/
           
         }}
       />      

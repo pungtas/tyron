@@ -73,5 +73,26 @@ export const styles = StyleSheet.create({
     color: 'steelblue',
     marginBottom: 20,  
   },
+  radioText: {
+        marginRight: 35,
+        fontSize: 20,
+        color: '#000',
+        fontWeight: '700'
+    },
+	radioCircle: {
+		height: 30,
+		width: 30,
+		borderRadius: 100,
+		borderWidth: 2,
+		borderColor: '#3740ff',
+		alignItems: 'center',
+		justifyContent: 'center',
+	},
+	selectedRb: {
+		width: 15,
+		height: 15,
+		borderRadius: 50,
+		backgroundColor: '#3740ff',
+  },
 });
 
