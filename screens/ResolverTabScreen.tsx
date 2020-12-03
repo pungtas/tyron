@@ -19,34 +19,20 @@ import * as React from 'react';
 import * as Themed from '../components/Themed';
 import * as ReactNavigation from '@react-navigation/stack';
 
-import * as API from '@zilliqa-js/zilliqa';
-import TyronZIL from '../src/tyronzil';
-import * as Scheme from 'tyronzil-js/dist/src/lib/decentralized-identity/tyronZIL-schemes/did-scheme';
+import * as Scheme from 'tyronzil-sdk/dist/decentralized-identity/tyronZIL-schemes/did-scheme';
+import * as DidResolver from 'tyronzil-sdk/dist/decentralized-identity/did-operations/did-resolve/resolver';
+import * as TyronZIL from 'tyronzil-sdk/dist/blockchain/tyronzil';
+import * as DidDocument from 'tyronzil-sdk/dist/decentralized-identity/did-operations/did-resolve/did-document';
 
 const NETWORK = [
-	{
-		key: 'testnet',
-		text: 'testnet',
-	},
-	{
-		key: 'mainnet',
-		text: 'mainnet',
-	}
+	'testnet',
+	'mainnet'
 ];
 
-const RESULT = [
-	{
-		key: 'DID-Document',
-		text: 'did-document',
-	},
-	{
-		key: 'DID-Resolution',
-		text: 'did-resolution',
-	}
+const RESOLUTION_CHOICE = [
+  'DID-Document',
+  'DID-Resolution'
 ];
-
-const ZILLIQA = new API.Zilliqa('https://dev-api.zilliqa.com/');
-const INIT_TYRON = "0x63e2d8484187de4f66a571c098f3b51a793f055b";
 
 type RootParamList = {
   "Resolve": undefined;
@@ -58,47 +44,49 @@ type LogInProps = ReactNavigation.StackScreenProps<RootParamList, "Resolve">
 export default function ResolveTabScreen({ navigation }: LogInProps) {
   const [username, setUsername] = React.useState("");
   const [network, setNetwork] = React.useState(NETWORK);
-  const [networkState, networkSetState] = React.useState({ networkValue: null });
+  const [networkState, setNetworkState] = React.useState({ networkValue: null });
   const { networkValue } = networkState;
-  const [result, setResult] = React.useState(RESULT);
-  const [resolutionState, resolutionSetState] = React.useState({ resolutionValue: null });
+  const [resolution, setResolution] = React.useState(RESOLUTION_CHOICE);
+  const [resolutionState, setResolutionState] = React.useState({ resolutionValue: null });
   const { resolutionValue } = resolutionState;
+  let NETWORK_NAMESPACE: Scheme.NetworkNamespace;
+  let INIT_TYRON: TyronZIL.InitTyron;
   
   return (
     <Themed.View style={Themed.styles.container}>
       <Themed.View>
-        {network.map((res: { key: React.ReactText; text: any; }) => {
+        {network.map((res: any) => {
 					return (
-						<ReactNative.View key={res.key} style={Themed.styles.container}>
-							<ReactNative.Text style={Themed.styles.radioText}>{res.text}</ReactNative.Text>
+						<ReactNative.View key={res} style={Themed.styles.container}>
+							<ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
 							<ReactNative.TouchableOpacity
 								style={Themed.styles.radioCircle}
 								onPress={() => {
-									networkSetState({
-										networkValue: res.key,
+									setNetworkState({
+										networkValue: res,
                   });
                   setNetwork(network);
 								}}>
-                  { networkValue === res.key && <ReactNative.View style={Themed.styles.selectedRb} />}
+                  { networkValue === res && <ReactNative.View style={Themed.styles.selectedRb} />}
 							</ReactNative.TouchableOpacity>
 						</ReactNative.View>
 					);
 				})}
       </Themed.View>
       <Themed.View>
-        {result.map((res: { key: React.ReactText; text: any; }) => {
+        {resolution.map((res: any) => {
 					return (
-						<ReactNative.View key={res.key} style={Themed.styles.container}>
-							<ReactNative.Text style={Themed.styles.radioText}>{res.text}</ReactNative.Text>
+						<ReactNative.View key={res} style={Themed.styles.container}>
+							<ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
 							<ReactNative.TouchableOpacity
 								style={Themed.styles.radioCircle}
 								onPress={() => {
-									resolutionSetState({
-										resolutionValue: res.key,
+									setResolutionState({
+										resolutionValue: res,
                   });
-                  setResult(result);
+                  setResolution(resolution);
 								}}>
-                  { resolutionValue === res.key && <ReactNative.View style={Themed.styles.selectedRb} />}
+                  { resolutionValue === res && <ReactNative.View style={Themed.styles.selectedRb} />}
 							</ReactNative.TouchableOpacity>
 						</ReactNative.View>
 					);
@@ -116,18 +104,40 @@ export default function ResolveTabScreen({ navigation }: LogInProps) {
       <Submit
         title = {`Resolve ${username}`}
         onSubmission = {async() => {
+          switch (networkValue) {
+            case 'testnet':
+              NETWORK_NAMESPACE = Scheme.NetworkNamespace.Testnet;
+              INIT_TYRON = TyronZIL.InitTyron.Testnet;
+              break;
+            case 'mainnet':
+              NETWORK_NAMESPACE = Scheme.NetworkNamespace.Mainnet;
+              INIT_TYRON = TyronZIL.InitTyron.Mainnet;
+              break;
+          };
+          const DIDC_ADDR = await DidResolver.default.resolveDns(NETWORK_NAMESPACE, INIT_TYRON, username);
           
-          /*const didcAddr = await TyronZIL.getDidAddr(ZILLIQA, INIT_TYRON, username);
-          if(typeof didcAddr === "string"){
-            if(login instanceof TyronZIL){
-              navigation.push("Resolved")
-            } else {
-              navigation.push("Resolve")            
-            }
-          } else {
-            alert!(didcAddr);
-          }*/
-          
+          let ACCEPT: DidDocument.Accept;
+          switch (resolutionValue) {
+              case 'DID-Document':
+                  ACCEPT = DidDocument.Accept.contentType                
+                  break;
+              case 'DID-Resolution':
+                  ACCEPT = DidDocument.Accept.Result
+          };
+
+          const RESOLUTION_INPUT: DidDocument.ResolutionInput = {
+              didcAddr: DIDC_ADDR,
+              metadata : {
+                  accept: ACCEPT
+              }
+          };
+          /** Resolves the Tyron DID */        
+          await DidDocument.default.resolution(NETWORK_NAMESPACE, RESOLUTION_INPUT)
+          .then(async (did_resolved: any) => {
+              alert!(JSON.stringify(did_resolved, null, 2));
+              navigation.push('Resolved')
+          })
+          .catch((_err: any) => { navigation.push('Resolve') })          
         }}
       />      
     </Themed.View>

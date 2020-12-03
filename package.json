@@ -39,15 +39,15 @@
     "react-native-safe-area-context": "3.1.4",
     "react-native-screens": "~2.10.1",
     "react-native-web": "~0.13.12",
-    "readable-stream": "^3.6.0"
+    "readable-stream": "^3.6.0",
+    "tyronzil-sdk": "^0.1.2"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",
     "@types/react": "~16.9.35",
     "@types/react-native": "~0.63.2",
     "jest-expo": "~39.0.0",
-    "typescript": "~3.9.5",
-    "tyronzil-js": "^2.1.0"
+    "typescript": "~3.9.5"
   },
   "private": true
 }

@@ -9,5 +9,5 @@
     "resolveJsonModule": true,
     "strict": true
   },
-  "extends": "tyronzil-js/tsconfig.json",
+  "extends": "tyronzil-sdk/tsconfig.json",
 }
