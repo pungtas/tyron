@@ -41,6 +41,20 @@ export function View(props: ViewProps) {
 }
 
 export const styles = StyleSheet.create({
+  backgroundImage: {
+    width: 1920,
+    height: 1080
+  },
+  welcomeImage: {
+    width: 520,
+    height: 920,
+    alignItems: "center"
+  },
+  tab: {
+    marginBottom: 10,
+    alignItems: 'center',
+    justifyContent: 'center',
+  },
   container: {
     flex: 1,
     alignItems: 'center',
@@ -59,10 +73,11 @@ export const styles = StyleSheet.create({
     width: '80%',
   },
   button: {
-    margin: 30,
-    backgroundColor: '#008080',
-    padding: 10,
-    borderRadius: 20,
+    margin: 10,
+    backgroundColor: '#58929b',
+    padding: 5,
+    borderRadius: 5,
+    borderBottomWidth: 0,
   },
   buttonText: {
     fontSize: 30,
@@ -70,7 +85,7 @@ export const styles = StyleSheet.create({
   },
   inputText: {
     fontSize: 25,
-    color: 'steelblue',
+    color: '#7e9e81',
     marginBottom: 20,  
   },
   radioText: {
@@ -80,11 +95,11 @@ export const styles = StyleSheet.create({
         fontWeight: '700'
     },
 	radioCircle: {
-		height: 30,
-		width: 30,
+		height: 25,
+		width: 25,
 		borderRadius: 100,
-		borderWidth: 2,
-		borderColor: '#3740ff',
+		borderWidth: 3,
+		borderColor: '#185c49',
 		alignItems: 'center',
 		justifyContent: 'center',
 	},
@@ -92,7 +107,6 @@ export const styles = StyleSheet.create({
 		width: 15,
 		height: 15,
 		borderRadius: 50,
-		backgroundColor: '#3740ff',
+		backgroundColor: '#708b9b',
   },
 });
-

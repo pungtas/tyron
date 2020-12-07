@@ -17,12 +17,13 @@ import * as ReactNative from 'react-native';
 import * as React from 'react';
 
 import * as Themed from '../components/Themed';
-import * as ReactNavigation from '@react-navigation/stack';
+import * as NavigationStack from '@react-navigation/stack';
 
 import * as Scheme from 'tyronzil-sdk/dist/decentralized-identity/tyronZIL-schemes/did-scheme';
 import * as DidResolver from 'tyronzil-sdk/dist/decentralized-identity/did-operations/did-resolve/resolver';
 import * as TyronZIL from 'tyronzil-sdk/dist/blockchain/tyronzil';
 import * as DidDocument from 'tyronzil-sdk/dist/decentralized-identity/did-operations/did-resolve/did-document';
+import { ResolverTabParamList } from '../types';
 
 const NETWORK = [
 	'testnet',
@@ -34,14 +35,14 @@ const RESOLUTION_CHOICE = [
   'DID-Resolution'
 ];
 
-type RootParamList = {
-  "Resolve": undefined;
-  "Resolved": undefined
+function Submit({ title, onSubmission }: { title: any, onSubmission: any }) {
+  return <ReactNative.TouchableOpacity onPress={onSubmission} style={Themed.styles.button}>
+  <Themed.Text style={Themed.styles.buttonText}>{title}</Themed.Text>
+  </ReactNative.TouchableOpacity>
 }
 
-type LogInProps = ReactNavigation.StackScreenProps<RootParamList, "Resolve">
-
-export default function ResolveTabScreen({ navigation }: LogInProps) {
+type Resolve = NavigationStack.StackScreenProps<ResolverTabParamList, "Resolve">
+export function ResolveScreen({ navigation }: Resolve) {
   const [username, setUsername] = React.useState("");
   const [network, setNetwork] = React.useState(NETWORK);
   const [networkState, setNetworkState] = React.useState({ networkValue: null });
@@ -54,6 +55,15 @@ export default function ResolveTabScreen({ navigation }: LogInProps) {
   
   return (
     <Themed.View style={Themed.styles.container}>
+      <ReactNative.TextInput
+        value = {username}
+        style = {Themed.styles.inputText}
+        placeholder = "Enter username.did"
+        onChangeText = {username => {
+          setUsername(username)
+        }}
+      />
+      <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
       <Themed.View>
         {network.map((res: any) => {
 					return (
@@ -73,6 +83,7 @@ export default function ResolveTabScreen({ navigation }: LogInProps) {
 					);
 				})}
       </Themed.View>
+      <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
       <Themed.View>
         {resolution.map((res: any) => {
 					return (
@@ -92,14 +103,6 @@ export default function ResolveTabScreen({ navigation }: LogInProps) {
 					);
 				})}
       </Themed.View>
-      <ReactNative.TextInput
-        value = {username}
-        style = {Themed.styles.inputText}
-        placeholder = "Enter username.did"
-        onChangeText = {username => {
-          setUsername(username)
-        }}
-      />
       <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
       <Submit
         title = {`Resolve ${username}`}
@@ -133,9 +136,8 @@ export default function ResolveTabScreen({ navigation }: LogInProps) {
           };
           /** Resolves the Tyron DID */        
           await DidDocument.default.resolution(NETWORK_NAMESPACE, RESOLUTION_INPUT)
-          .then(async (did_resolved: any) => {
-              alert!(JSON.stringify(did_resolved, null, 2));
-              navigation.push('Resolved')
+          .then(async did_resolved => {
+              navigation.push('Resolved', { paramA: did_resolved })
           })
           .catch((_err: any) => { navigation.push('Resolve') })          
         }}
@@ -144,8 +146,19 @@ export default function ResolveTabScreen({ navigation }: LogInProps) {
   );
 }
 
-function Submit({ title, onSubmission }: { title: any, onSubmission: any }) {
-  return <ReactNative.TouchableOpacity onPress={onSubmission} style={Themed.styles.button}>
-  <Themed.Text style={Themed.styles.buttonText}>{title}</Themed.Text>
-  </ReactNative.TouchableOpacity>
+type Resolved = NavigationStack.StackScreenProps<ResolverTabParamList, "Resolved">
+export function ResolvedScreen({ navigation, route }: Resolved) {
+  const DID_RESOLVED = route.params.paramA;
+
+  return (
+    <Themed.View style={Themed.styles.container}>
+      { alert!(JSON.stringify(DID_RESOLVED, null, 2)) }
+      <Submit
+        title = {`Go back to the resolver`}
+        onSubmission = {async() => {
+          navigation.push("Resolve");
+        }}
+      />      
+    </Themed.View>
+  );
 }

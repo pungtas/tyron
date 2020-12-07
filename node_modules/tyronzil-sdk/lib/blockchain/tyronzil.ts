@@ -94,10 +94,10 @@ export default class TyronZIL extends ZilliqaInit {
     public static async deploy(
         agent: string,
         input: TyronZIL,
-        version: string): Promise<DeployedContract> {
-        const deployed_contract = await SmartUtil.decode(input.API, input.initTyron, version)
-        .then(contract_code => {
-            const CONTRACT_INIT = [
+        contractCode: string
+    ): Promise<DeployedContract> {
+        
+        const CONTRACT_INIT = [
                 {
                     vname: '_scilla_version',
                     type: 'Uint32',
@@ -114,19 +114,18 @@ export default class TyronZIL extends ZilliqaInit {
                     value: `${input.initTyron}`,
                 }
             ];
-            const CONTRACT = input.API.contracts.new(contract_code, CONTRACT_INIT);
-            return CONTRACT;
-        })
-        .then(async contract => {
-            input.API.wallet.addByPrivateKey(input.userPrivateKey);
-            const USER_BALANCE = await input.API.blockchain.getBalance(input.contractOwner);
-
-            const [deployTx, didc] = await contract.deploy(
+        const CONTRACT = input.API.contracts.new(contractCode, CONTRACT_INIT);
+        
+        input.API.wallet.addByPrivateKey(input.userPrivateKey);
+        
+        const deployed_contract = await input.API.blockchain.getBalance(input.contractOwner)
+        .then( async user_balance => {
+            const [deployTx, didc] = await CONTRACT.deploy(
                 {
                     version: input.zilVersion,
                     gasPrice: input.gasPrice,
                     gasLimit: input.gasLimit,
-                    nonce: Number(USER_BALANCE.result.nonce)+ 1,
+                    nonce: Number(user_balance.result.nonce)+ 1,
                 },
                 33,
                 1000,
@@ -140,7 +139,7 @@ export default class TyronZIL extends ZilliqaInit {
             const DEPLOYMENT_GAS = (deployTx.getReceipt())!.cumulative_gas;
         
             // Calling the Init transition
-            const INIT_CALL = await deployed_contract.contract.call(
+            const INIT_CALL = await didc.call(
                 'Init',
                 [
                     {

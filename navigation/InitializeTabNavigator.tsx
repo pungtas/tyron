@@ -2,13 +2,13 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import * as ReactNative from 'react-native';
-
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 import WelcomeTabScreen from '../screens/WelcomeTabScreen';
-import ResolverTabScreen from '../screens/ResolverTabScreen';
+import * as Resolver from '../screens/ResolverTabScreen';
 import { BottomTabParamList, WelcomeTabParamList, ResolverTabParamList } from '../types';
+import * as Themed from '../components/Themed';
+import * as Icons from '@expo/vector-icons';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -18,20 +18,20 @@ export default function InitializeTabNavigator() {
   return(
       <BottomTab.Navigator
         initialRouteName="Welcome"
-        tabBarOptions={{ activeTintColor: Colors[colorScheme].tint }}
+        tabBarOptions={ { activeTintColor: Colors[colorScheme].tint }}
         >
         <BottomTab.Screen
           name="Welcome"
           component={WelcomeNavigator}
           options={{
-            tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+            tabBarIcon: ({ color }) => <WelcomeTabBarIcon name="md-planet" color={color} />,
           }}
         />
         <BottomTab.Screen
           name="Resolver"
           component={ResolverNavigator}
           options={{
-            tabBarIcon: ({ color }) => <TabBarIcon name="ios-code" color={color} />,
+            tabBarIcon: ({ color }) => <ResolverTabBarIcon name="rocket1" color={color} />,
           }}
         />
       </BottomTab.Navigator>
@@ -40,9 +40,15 @@ export default function InitializeTabNavigator() {
 
 // You can explore the built-in icon families and icons on the web at:
 // https://icons.expo.fyi/
-function TabBarIcon(props: { name: string; color: string }) {
+function WelcomeTabBarIcon(props: { name: string; color: string }) {
   return(
-    <Ionicons size={30} style={styles.tab} {...props} />
+    <Ionicons size={30} style={Themed.styles.tab} {...props} />
+  );
+}
+
+function ResolverTabBarIcon(props: { name: string; color: string }) {
+  return(
+    <Icons.AntDesign size={30} style={Themed.styles.tab} {...props} />
   );
 }
 
@@ -63,23 +69,19 @@ function WelcomeNavigator() {
 }
 
 const ResolverTabStack = createStackNavigator<ResolverTabParamList>();
-
 function ResolverNavigator() {
   return (
     <ResolverTabStack.Navigator>
       <ResolverTabStack.Screen
-        name="ResolverTabScreen"
-        component={ResolverTabScreen}
+        name="Resolve"
+        component={Resolver.ResolveScreen}
         options={{ headerTitle: 'Resolver DID Browser' }}
+      />
+      <ResolverTabStack.Screen
+        name="Resolved"
+        component={Resolver.ResolvedScreen}
+        options={{ headerTitle: 'DID Resolved' }}
       />
     </ResolverTabStack.Navigator>
   );
 }
-
-const styles = ReactNative.StyleSheet.create({
-  tab: {
-    marginBottom: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-})

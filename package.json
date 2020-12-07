@@ -40,7 +40,7 @@
     "react-native-screens": "~2.10.1",
     "react-native-web": "~0.13.12",
     "readable-stream": "^3.6.0",
-    "tyronzil-sdk": "^0.1.2"
+    "tyronzil-sdk": "^0.1.4"
   },
   "devDependencies": {
     "@babel/core": "~7.9.0",

@@ -1,21 +1,27 @@
 import * as React from 'react';
-import { StyleSheet, Image } from 'react-native';
-import { Text, View } from '../components/Themed';
+import * as ReactNative from 'react-native';
+import * as Themed from '../components/Themed';
 
-const tyron = require('../assets/images/tyron.png');
+const background = require('../assets/images/welcomeBackground.jpg');
+const welcomeImage = require('../assets/images/welcomeImage.jpg');
 
 export default function WelcomeScreen() {
   return (
-    <View style={styles.container}>
-      <Image source={tyron} style={styles.tyron}/> 
-      <Text style={styles.slogan}>Own your data, empower your world!</Text>
-      <View style={styles.separator} lightColor="#eee" darkColor="rgba(255,255,255,0.1)" />
-      <Text style={styles.title}>Your self-sovereign decentralized identity.did</Text>
-    </View>
+    <ReactNative.ImageBackground
+     source={background}
+     style={Themed.styles.backgroundImage}
+    >
+      <ReactNative.Image
+      source={welcomeImage}
+      style={Themed.styles.welcomeImage}
+      />
+      <Themed.Text style={styles.slogan}>Own your data, empower your world!</Themed.Text>
+      <Themed.Text style={styles.title}>Your self-sovereign decentralized identity.did</Themed.Text>
+    </ReactNative.ImageBackground>
   );
 }
 
-const styles = StyleSheet.create({
+const styles = ReactNative.StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
