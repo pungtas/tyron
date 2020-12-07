@@ -17,7 +17,6 @@ import * as ReactNative from 'react-native';
 import * as React from 'react';
 import * as Themed from '../components/Themed';
 import * as NavigationStack from '@react-navigation/stack';
-
 import * as Scheme from 'tyronzil-sdk/dist/decentralized-identity/tyronZIL-schemes/did-scheme';
 import * as DidResolver from 'tyronzil-sdk/dist/decentralized-identity/did-operations/did-resolve/resolver';
 import * as TyronZIL from 'tyronzil-sdk/dist/blockchain/tyronzil';
@@ -36,19 +35,19 @@ const RESOLUTION_CHOICE = [
   'DID-Resolution'
 ];
 
-function Submit({ title, onSubmission }: { title: any, onSubmission: any }) {
-  return <ReactNative.TouchableOpacity onPress={onSubmission} style={Themed.styles.button}>
-  <Themed.Text style={Themed.styles.buttonText}>{title}</Themed.Text>
-  </ReactNative.TouchableOpacity>
-}
+const STATE = {
+  loading: false
+};
 
 type Resolve = NavigationStack.StackScreenProps<ResolverTabParamList, "Resolve">
 export function ResolveScreen({ navigation }: Resolve) {
   const [username, setUsername] = React.useState("");
   const [network, setNetwork] = React.useState(NETWORK);
   const [networkState, setNetworkState] = React.useState({ networkValue: null });
-  const { networkValue } = networkState;
   const [resolution, setResolution] = React.useState(RESOLUTION_CHOICE);
+  const [state, setState] = React.useState(STATE);
+
+  const { networkValue } = networkState;
   const [resolutionState, setResolutionState] = React.useState({ resolutionValue: null });
   const { resolutionValue } = resolutionState;
   let NETWORK_NAMESPACE: Scheme.NetworkNamespace;
@@ -117,7 +116,12 @@ export function ResolveScreen({ navigation }: Resolve) {
         <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
         <Submit
           title = {`Resolve ${username}`}
+          state = {state}
           onSubmission = {async() => {
+            setState({
+              loading: true
+            });
+
             switch (networkValue) {
               case 'testnet':
                 NETWORK_NAMESPACE = Scheme.NetworkNamespace.Testnet;
@@ -158,16 +162,26 @@ export function ResolveScreen({ navigation }: Resolve) {
   }
 }
 
+function Submit({ title, onSubmission, state }: { title: any, onSubmission: any, state: any }) {
+  return <ReactNative.TouchableOpacity onPress={onSubmission} style={Themed.styles.button}>
+    <Themed.Text style={Themed.styles.buttonText}>{title}</Themed.Text>
+    {
+      state.loading &&
+      <ReactNative.ActivityIndicator size="large" color="#00ff00" />
+    }
+  </ReactNative.TouchableOpacity>
+}
+
 type Resolved = NavigationStack.StackScreenProps<ResolverTabParamList, "Resolved">
 export function ResolvedScreen({ navigation, route }: Resolved) {
   const DID_RESOLVED = route.params.paramA;
-
   return (
     <Themed.View style={Themed.styles.container}>
       { alert!(JSON.stringify(DID_RESOLVED, null, 2)) }
       <Submit
-        title = {`Go back to the resolver`}
-        onSubmission = {async() => {
+        title={`Go back to the resolver`}
+        state={STATE}
+        onSubmission={async() => {
           navigation.push("Resolve");
         }}
       />      

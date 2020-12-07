@@ -24,14 +24,14 @@ export default function InitializeTabNavigator() {
           name="Welcome"
           component={WelcomeNavigator}
           options={{
-            tabBarIcon: ({ color }) => <WelcomeTabBarIcon name="md-planet" color={color} />,
+            tabBarIcon: ({ color }) => <WelcomeTabBarIcon name="md-planet" color={color} />
           }}
         />
         <BottomTab.Screen
           name="Resolver"
           component={ResolverNavigator}
           options={{
-            tabBarIcon: ({ color }) => <ResolverTabBarIcon name="rocket1" color={color} />,
+            tabBarIcon: ({ color }) => <ResolverTabBarIcon name="rocket1" color={color}/>
           }}
         />
       </BottomTab.Navigator>
@@ -42,13 +42,13 @@ export default function InitializeTabNavigator() {
 // https://icons.expo.fyi/
 function WelcomeTabBarIcon(props: { name: string; color: string }) {
   return(
-    <Ionicons size={30} style={Themed.styles.tab} {...props} />
+    <Ionicons size={40} style={Themed.styles.tab} {...props} />
   );
 }
 
 function ResolverTabBarIcon(props: { name: string; color: string }) {
   return(
-    <Icons.AntDesign size={30} style={Themed.styles.tab} {...props} />
+    <Icons.AntDesign size={40} style={Themed.styles.tab} {...props} />
   );
 }
 

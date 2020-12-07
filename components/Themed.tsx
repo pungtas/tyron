@@ -72,7 +72,8 @@ export const styles = ReactNative.StyleSheet.create({
     lineHeight: 40,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 40
+    marginBottom: 40,
+    color: '#021e55'
   },
   separator: {
     marginVertical: 10,
