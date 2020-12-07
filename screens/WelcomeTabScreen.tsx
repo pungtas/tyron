@@ -2,21 +2,20 @@ import * as React from 'react';
 import * as ReactNative from 'react-native';
 import * as Themed from '../components/Themed';
 
-const background = require('../assets/images/welcomeBackground.jpg');
 const welcomeImage = require('../assets/images/welcomeImage.jpg');
 
 export default function WelcomeScreen() {
+
   return (
     <ReactNative.ImageBackground
-     source={background}
+     source={Themed.welcomeBackground}
+     resizeMode={'contain'}
      style={Themed.styles.backgroundImage}
     >
       <ReactNative.Image
       source={welcomeImage}
       style={Themed.styles.welcomeImage}
       />
-      <Themed.Text style={styles.slogan}>Own your data, empower your world!</Themed.Text>
-      <Themed.Text style={styles.title}>Your self-sovereign decentralized identity.did</Themed.Text>
     </ReactNative.ImageBackground>
   );
 }

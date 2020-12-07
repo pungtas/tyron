@@ -15,7 +15,6 @@
 
 import * as ReactNative from 'react-native';
 import * as React from 'react';
-
 import * as Themed from '../components/Themed';
 import * as NavigationStack from '@react-navigation/stack';
 
@@ -24,6 +23,8 @@ import * as DidResolver from 'tyronzil-sdk/dist/decentralized-identity/did-opera
 import * as TyronZIL from 'tyronzil-sdk/dist/blockchain/tyronzil';
 import * as DidDocument from 'tyronzil-sdk/dist/decentralized-identity/did-operations/did-resolve/did-document';
 import { ResolverTabParamList } from '../types';
+import { useFonts, Ubuntu_400Regular } from '@expo-google-fonts/ubuntu';
+import { AppLoading } from 'expo';
 
 const NETWORK = [
 	'testnet',
@@ -53,97 +54,108 @@ export function ResolveScreen({ navigation }: Resolve) {
   let NETWORK_NAMESPACE: Scheme.NetworkNamespace;
   let INIT_TYRON: TyronZIL.InitTyron;
   
-  return (
-    <Themed.View style={Themed.styles.container}>
-      <ReactNative.TextInput
-        value = {username}
-        style = {Themed.styles.inputText}
-        placeholder = "Enter username.did"
-        onChangeText = {username => {
-          setUsername(username)
-        }}
-      />
-      <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
-      <Themed.View>
-        {network.map((res: any) => {
-					return (
-						<ReactNative.View key={res} style={Themed.styles.container}>
-							<ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
-							<ReactNative.TouchableOpacity
-								style={Themed.styles.radioCircle}
-								onPress={() => {
-									setNetworkState({
-										networkValue: res,
-                  });
-                  setNetwork(network);
-								}}>
-                  { networkValue === res && <ReactNative.View style={Themed.styles.selectedRb} />}
-							</ReactNative.TouchableOpacity>
-						</ReactNative.View>
-					);
-				})}
-      </Themed.View>
-      <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
-      <Themed.View>
-        {resolution.map((res: any) => {
-					return (
-						<ReactNative.View key={res} style={Themed.styles.container}>
-							<ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
-							<ReactNative.TouchableOpacity
-								style={Themed.styles.radioCircle}
-								onPress={() => {
-									setResolutionState({
-										resolutionValue: res,
-                  });
-                  setResolution(resolution);
-								}}>
-                  { resolutionValue === res && <ReactNative.View style={Themed.styles.selectedRb} />}
-							</ReactNative.TouchableOpacity>
-						</ReactNative.View>
-					);
-				})}
-      </Themed.View>
-      <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
-      <Submit
-        title = {`Resolve ${username}`}
-        onSubmission = {async() => {
-          switch (networkValue) {
-            case 'testnet':
-              NETWORK_NAMESPACE = Scheme.NetworkNamespace.Testnet;
-              INIT_TYRON = TyronZIL.InitTyron.Testnet;
-              break;
-            case 'mainnet':
-              NETWORK_NAMESPACE = Scheme.NetworkNamespace.Mainnet;
-              INIT_TYRON = TyronZIL.InitTyron.Mainnet;
-              break;
-          };
-          const DIDC_ADDR = await DidResolver.default.resolveDns(NETWORK_NAMESPACE, INIT_TYRON, username);
-          
-          let ACCEPT: DidDocument.Accept;
-          switch (resolutionValue) {
-              case 'DID-Document':
-                  ACCEPT = DidDocument.Accept.contentType                
-                  break;
-              case 'DID-Resolution':
-                  ACCEPT = DidDocument.Accept.Result
-          };
+  let [fontsLoaded] = useFonts({
+    Ubuntu_400Regular
+  });
 
-          const RESOLUTION_INPUT: DidDocument.ResolutionInput = {
-              didcAddr: DIDC_ADDR,
-              metadata : {
-                  accept: ACCEPT
-              }
-          };
-          /** Resolves the Tyron DID */        
-          await DidDocument.default.resolution(NETWORK_NAMESPACE, RESOLUTION_INPUT)
-          .then(async did_resolved => {
-              navigation.push('Resolved', { paramA: did_resolved })
-          })
-          .catch((_err: any) => { navigation.push('Resolve') })          
-        }}
-      />      
-    </Themed.View>
-  );
+  if (!fontsLoaded) {
+    return <AppLoading />;
+  } else {
+    return (
+      <ReactNative.ImageBackground
+        source={Themed.welcomeBackground}
+        style={Themed.styles.backgroundImage}
+      >
+        <ReactNative.TextInput
+          value = {username}
+          style = {Themed.styles.inputText}
+          placeholder = "Enter username.did"
+          onChangeText = {username => {
+            setUsername(username)
+          }}
+        />
+        <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
+        <Themed.View>
+          {network.map((res: any) => {
+            return (
+              <ReactNative.View key={res} style={Themed.styles.container}>
+                <ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
+                <ReactNative.TouchableOpacity
+                  style={Themed.styles.radioCircle}
+                  onPress={() => {
+                    setNetworkState({
+                      networkValue: res,
+                    });
+                    setNetwork(network);
+                  }}>
+                    { networkValue === res && <ReactNative.View style={Themed.styles.selectedRb} />}
+                </ReactNative.TouchableOpacity>
+              </ReactNative.View>
+            );
+          })}
+        </Themed.View>
+        <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
+        <Themed.View>
+          {resolution.map((res: any) => {
+            return (
+              <ReactNative.View key={res} style={Themed.styles.container}>
+                <ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
+                <ReactNative.TouchableOpacity
+                  style={Themed.styles.radioCircle}
+                  onPress={() => {
+                    setResolutionState({
+                      resolutionValue: res,
+                    });
+                    setResolution(resolution);
+                  }}>
+                    { resolutionValue === res && <ReactNative.View style={Themed.styles.selectedRb} />}
+                </ReactNative.TouchableOpacity>
+              </ReactNative.View>
+            );
+          })}
+        </Themed.View>
+        <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
+        <Submit
+          title = {`Resolve ${username}`}
+          onSubmission = {async() => {
+            switch (networkValue) {
+              case 'testnet':
+                NETWORK_NAMESPACE = Scheme.NetworkNamespace.Testnet;
+                INIT_TYRON = TyronZIL.InitTyron.Testnet;
+                break;
+              case 'mainnet':
+                NETWORK_NAMESPACE = Scheme.NetworkNamespace.Mainnet;
+                INIT_TYRON = TyronZIL.InitTyron.Mainnet;
+                break;
+            };
+            const DIDC_ADDR = await DidResolver.default.resolveDns(NETWORK_NAMESPACE, INIT_TYRON, username);
+            
+            let ACCEPT: DidDocument.Accept;
+            switch (resolutionValue) {
+                case 'DID-Document':
+                    ACCEPT = DidDocument.Accept.contentType                
+                    break;
+                case 'DID-Resolution':
+                    ACCEPT = DidDocument.Accept.Result
+            };
+
+            const RESOLUTION_INPUT: DidDocument.ResolutionInput = {
+                didcAddr: DIDC_ADDR,
+                metadata : {
+                    accept: ACCEPT
+                }
+            };
+            /** Resolves the Tyron DID */        
+            await DidDocument.default.resolution(NETWORK_NAMESPACE, RESOLUTION_INPUT)
+            .then(async did_resolved => {
+                navigation.push('Resolved', { paramA: did_resolved })
+            })
+            .catch((_err: any) => { navigation.push('Resolve') })          
+          }}
+        />
+      </ReactNative.ImageBackground>
+    );
+  }
 }
 
 type Resolved = NavigationStack.StackScreenProps<ResolverTabParamList, "Resolved">

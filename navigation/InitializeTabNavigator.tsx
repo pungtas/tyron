@@ -62,7 +62,17 @@ function WelcomeNavigator() {
       <WelcomeTabStack.Screen
         name="WelcomeTabScreen"
         component={WelcomeTabScreen}
-        options={{ headerTitle: 'Welcome to tyron.did' }}
+        options={{ 
+          headerTitle: 'Welcome to tyron.did',
+          headerTitleStyle: {
+            fontSize: 30,
+            fontFamily: 'Ubuntu_400Regular',
+            color: '#fff',
+          },
+          headerStyle: {
+            backgroundColor: '#021e55',
+          },
+        }}
       />
     </WelcomeTabStack.Navigator>
   );
@@ -75,12 +85,32 @@ function ResolverNavigator() {
       <ResolverTabStack.Screen
         name="Resolve"
         component={Resolver.ResolveScreen}
-        options={{ headerTitle: 'Resolver DID Browser' }}
+        options={{
+          headerTitle: 'Resolver DID Browser',
+          headerTitleStyle: {
+            fontSize: 30,
+            fontFamily: 'Ubuntu_400Regular',
+            color: '#fff'
+          },
+          headerStyle: {
+            backgroundColor: '#021e55',
+          },
+        }}
       />
       <ResolverTabStack.Screen
         name="Resolved"
         component={Resolver.ResolvedScreen}
-        options={{ headerTitle: 'DID Resolved' }}
+        options={{
+          headerTitle: 'DID Resolved',
+          headerTitleStyle: {
+            fontSize: 30,
+            fontFamily: 'Ubuntu_400Regular',
+            color: '#fff'
+          },
+          headerStyle: {
+            backgroundColor: '#021e55',
+          },
+        }}
       />
     </ResolverTabStack.Navigator>
   );

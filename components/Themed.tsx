@@ -1,8 +1,12 @@
 import * as React from 'react';
-import { StyleSheet, Text as DefaultText, View as DefaultView } from 'react-native';
+import * as ReactNative from 'react-native';
 
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
+
+// Background images
+export const welcomeBackground = require('../assets/images/welcomeBackground.jpg');
+
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
@@ -23,37 +27,39 @@ type ThemeProps = {
   darkColor?: string;
 };
 
-export type TextProps = ThemeProps & DefaultText['props'];
-export type ViewProps = ThemeProps & DefaultView['props'];
+export type TextProps = ThemeProps & ReactNative.Text['props'];
+export type ViewProps = ThemeProps & ReactNative.View['props'];
 
 export function Text(props: TextProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const color = useThemeColor({ light: lightColor, dark: darkColor }, 'text');
 
-  return <DefaultText style={[{ color }, style]} {...otherProps} />;
+  return <ReactNative.Text style={[{ color }, style]} {...otherProps} />;
 }
 
 export function View(props: ViewProps) {
   const { style, lightColor, darkColor, ...otherProps } = props;
   const backgroundColor = useThemeColor({ light: lightColor, dark: darkColor }, 'background');
 
-  return <DefaultView style={[{ backgroundColor }, style]} {...otherProps} />;
+  return <ReactNative.View style={[{ backgroundColor }, style]} {...otherProps} />;
 }
 
-export const styles = StyleSheet.create({
+const {width, height} = ReactNative.Dimensions.get("window")
+
+export const styles = ReactNative.StyleSheet.create({
   backgroundImage: {
-    width: 1920,
-    height: 1080
+    height: '100%',
+    width: '100%',
   },
   welcomeImage: {
-    width: 520,
-    height: 920,
-    alignItems: "center"
+    maxHeight: height,
+    maxWidth: width,
+    marginHorizontal: 360
   },
   tab: {
     marginBottom: 10,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'
   },
   container: {
     flex: 1,
@@ -62,10 +68,11 @@ export const styles = StyleSheet.create({
   },
   title: {
     fontSize: 30,
+    fontFamily: 'Ubuntu_400Regular',
     lineHeight: 40,
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 40,
+    marginBottom: 40
   },
   separator: {
     marginVertical: 10,
@@ -82,18 +89,21 @@ export const styles = StyleSheet.create({
   buttonText: {
     fontSize: 30,
     color: '#fff',
+    fontFamily: 'Ubuntu_400Regular'
   },
   inputText: {
     fontSize: 25,
     color: '#7e9e81',
-    marginBottom: 20,  
+    marginBottom: 20,
+    fontFamily: 'Ubuntu_400Regular'
   },
   radioText: {
-        marginRight: 35,
-        fontSize: 20,
-        color: '#000',
-        fontWeight: '700'
-    },
+    marginRight: 35,
+    fontSize: 20,
+    fontFamily: 'Ubuntu_400Regular',
+    color: '#000',
+    fontWeight: '700'
+  },
 	radioCircle: {
 		height: 25,
 		width: 25,
