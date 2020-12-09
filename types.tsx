@@ -32,5 +32,5 @@ export type WelcomeTabParamList = {
 
 export type ResolverTabParamList = {
   Resolve: undefined;
-  Resolved: { paramA: DidDocument.ResolutionResult | DidDocument.default }
+  Resolved: { paramA: string, paramB: DidDocument.ResolutionResult | DidDocument.default }
 };

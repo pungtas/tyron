@@ -1,48 +1,34 @@
+/*
+    tyron.did: Self-sovereign digital identity decentralized application on the Zilliqa blockchain platform
+    Copyright (C) 2020 Julio Cesar Cabrapan Duarte
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU General Public License as published by
+    the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU General Public License for more details.
+*/
+
 import * as React from 'react';
 import * as ReactNative from 'react-native';
 import * as Themed from '../components/Themed';
 
-const welcomeImage = require('../assets/images/welcomeImage.jpg');
-
-export default function WelcomeScreen() {
-  return (
-    <ReactNative.ImageBackground
-     source={Themed.welcomeBackground}
-     style={Themed.styles.backgroundImage}
-    >
-      <ReactNative.Image
-      source={welcomeImage}
-      style={Themed.styles.welcomeImage}
-      />
-    </ReactNative.ImageBackground>
-  );
+export default class Welcome extends React.Component {
+  public static WelcomeScreen() {
+    return (
+      <ReactNative.ImageBackground
+      source={Themed.welcomeBackground}
+      style={Themed.styles.image}
+      >
+        <ReactNative.Image
+        source={Themed.welcomeImage}
+        style={Themed.styles.welcomeImage}
+        />
+      </ReactNative.ImageBackground>
+    );
+  }
 }
-
-const styles = ReactNative.StyleSheet.create({
-  container: {
-    flex: 1,
-    alignItems: 'center',
-    //justifyContent: 'center',
-  },
-  tyron: {
-    marginTop: 5,
-    width: 350,
-    height: 350,
-  },
-  slogan: {
-    fontSize: 20,
-    fontStyle: 'italic',
-    marginBottom: 20,
-  },
-  title: {
-    margin: 30,
-    fontSize: 20,
-    fontWeight: 'bold',
-    textAlign: 'center',
-  },
-  separator: {
-    marginVertical: 10,
-    height: 1,
-    width: '80%',
-  },
-});

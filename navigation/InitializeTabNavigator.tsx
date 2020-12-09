@@ -4,11 +4,14 @@ import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
 import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
-import WelcomeTabScreen from '../screens/WelcomeTabScreen';
+import * as Welcome from '../screens/WelcomeTabScreen';
 import * as Resolver from '../screens/ResolverTabScreen';
 import { BottomTabParamList, WelcomeTabParamList, ResolverTabParamList } from '../types';
 import * as Themed from '../components/Themed';
 import * as Icons from '@expo/vector-icons';
+import { Ubuntu_400Regular } from '@expo-google-fonts/ubuntu';
+import * as Font from 'expo-font';
+import { AppLoading } from 'expo';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
@@ -22,14 +25,14 @@ export default function InitializeTabNavigator() {
         >
         <BottomTab.Screen
           name="Welcome"
-          component={WelcomeNavigator}
+          component={Navigator.WelcomeNavigator}
           options={{
             tabBarIcon: ({ color }) => <WelcomeTabBarIcon name="md-planet" color={color} />
           }}
         />
         <BottomTab.Screen
           name="Resolver"
-          component={ResolverNavigator}
+          component={Navigator.ResolverNavigator}
           options={{
             tabBarIcon: ({ color }) => <ResolverTabBarIcon name="rocket1" color={color}/>
           }}
@@ -56,62 +59,96 @@ function ResolverTabBarIcon(props: { name: string; color: string }) {
 // https://reactnavigation.org/docs/tab-based-navigation#a-stack-navigator-for-each-tab
 
 const WelcomeTabStack = createStackNavigator<WelcomeTabParamList>();
-function WelcomeNavigator() {
-  return (
-    <WelcomeTabStack.Navigator>
-      <WelcomeTabStack.Screen
-        name="WelcomeTabScreen"
-        component={WelcomeTabScreen}
-        options={{ 
-          headerTitle: 'Welcome to tyron.did',
-          headerTitleStyle: {
-            fontSize: 30,
-            fontFamily: 'Ubuntu_400Regular',
-            color: '#fff',
-          },
-          headerStyle: {
-            backgroundColor: '#021e55',
-          },
-        }}
-      />
-    </WelcomeTabStack.Navigator>
-  );
+const ResolverTabStack = createStackNavigator<ResolverTabParamList>();
+
+let font_state = {
+  fontsLoaded: false,
+};
+
+let customFonts = {
+  Ubuntu_400Regular
+};
+
+async function _loadFontsAsync() {
+  await Font.loadAsync(customFonts);
 }
 
-const ResolverTabStack = createStackNavigator<ResolverTabParamList>();
-function ResolverNavigator() {
-  return (
-    <ResolverTabStack.Navigator>
-      <ResolverTabStack.Screen
-        name="Resolve"
-        component={Resolver.ResolveScreen}
-        options={{
-          headerTitle: 'Resolver DID Browser',
-          headerTitleStyle: {
-            fontSize: 30,
-            fontFamily: 'Ubuntu_400Regular',
-            color: '#fff'
-          },
-          headerStyle: {
-            backgroundColor: '#021e55',
-          },
-        }}
-      />
-      <ResolverTabStack.Screen
-        name="Resolved"
-        component={Resolver.ResolvedScreen}
-        options={{
-          headerTitle: 'DID Resolved',
-          headerTitleStyle: {
-            fontSize: 30,
-            fontFamily: 'Ubuntu_400Regular',
-            color: '#fff'
-          },
-          headerStyle: {
-            backgroundColor: '#021e55',
-          },
-        }}
-      />
-    </ResolverTabStack.Navigator>
-  );
+class Navigator extends React.Component {
+  static componentDidMount(): any {
+    _loadFontsAsync();
+    return font_state = {
+      fontsLoaded: true,
+    };
+  }
+
+  public static WelcomeNavigator() {
+    const font = Navigator.componentDidMount();
+
+    if (!font.fontsLoaded) {
+      return <AppLoading />;
+    } else {
+      return (
+        <WelcomeTabStack.Navigator>
+          <WelcomeTabStack.Screen
+            name="WelcomeTabScreen"
+            component={Welcome.default.WelcomeScreen}
+            options={{ 
+              headerTitle: 'Welcome to tyron.did',
+              headerTitleStyle: {
+                fontSize: 30,
+                fontFamily: 'Ubuntu_400Regular',
+                color: '#fff',
+              },
+              headerStyle: {
+                backgroundColor: '#021e55',
+              },
+            }}
+          />
+        </WelcomeTabStack.Navigator>
+      );
+    }
+  }
+
+  public static ResolverNavigator() {
+    const font = Navigator.componentDidMount();
+
+    if (!font.fontsLoaded) {
+      return <AppLoading />;
+    } else {
+      return (
+        <ResolverTabStack.Navigator>
+          <ResolverTabStack.Screen
+            name="Resolve"
+            component={Resolver.default.ResolveScreen}
+            options={{
+              headerTitle: 'DID browser',
+              headerTitleStyle: {
+                fontSize: 30,
+                fontFamily: 'Ubuntu_400Regular',
+                color: '#fff'
+              },
+              headerStyle: {
+                backgroundColor: '#021e55',
+              },
+            }}
+          />
+          <ResolverTabStack.Screen
+            name="Resolved"
+            component={Resolver.default.ResolvedScreen}
+            options={{
+              headerTitle: 'DID resolved',
+              headerTitleStyle: {
+                fontSize: 30,
+                fontFamily: 'Ubuntu_400Regular',
+                color: '#fff'
+              },
+              headerStyle: {
+                backgroundColor: '#021e55',
+              },
+            }}
+          />
+        </ResolverTabStack.Navigator>
+      );
+    }
+  }
 }
