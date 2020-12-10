@@ -121,6 +121,12 @@ export const styles = ReactNative.StyleSheet.create({
     backgroundColor: '#7e9e81',
     fontSize: 20,
     fontFamily: 'Ubuntu_400Regular',
+    flexDirection: 'row-reverse',
+  },
+  document: {
+    backgroundColor: '#7e9e81',
+    fontSize: 20,
+    fontFamily: 'Ubuntu_400Regular',
   },
   radioText: {
     marginRight: 35,

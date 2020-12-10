@@ -51,7 +51,7 @@ export default class Resolver extends React.Component {
         source={Themed.welcomeBackground}
         style={Themed.styles.image}
       >
-        <ReactNative.View style={Themed.styles.container}>
+        <ReactNative.View style={Themed.styles.scrollView}>
         <ReactNative.TextInput
           value = {username}
           style = {Themed.styles.inputText}
@@ -61,6 +61,7 @@ export default class Resolver extends React.Component {
           }}
         />
         <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
+        <ReactNative.Text style={Themed.styles.title}>Zilliqa network:</ReactNative.Text>
         <Themed.View>
           {network.map((res: any) => {
             return (
@@ -81,6 +82,7 @@ export default class Resolver extends React.Component {
           })}
         </Themed.View>
         <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
+        <ReactNative.Text style={Themed.styles.title}>Zilliqa network:</ReactNative.Text>
         <Themed.View>
           {resolution.map((res: any) => {
             return (
@@ -207,7 +209,7 @@ export default class Resolver extends React.Component {
           <Themed.View>
           {RESULT.map((res: any) => {
             return (
-              <ReactNative.View key={res} style={Themed.styles.options}>
+              <ReactNative.View key={res} style={Themed.styles.document}>
                 <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
                 <ReactNative.Text style={Themed.styles.options}>{res}</ReactNative.Text>
               </ReactNative.View>
