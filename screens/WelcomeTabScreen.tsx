@@ -21,13 +21,9 @@ export default class Welcome extends React.Component {
   public static WelcomeScreen() {
     return (
       <ReactNative.ImageBackground
-      source={Themed.welcomeBackground}
+      source={Themed.welcomeImage}
       style={Themed.styles.image}
       >
-        <ReactNative.Image
-        source={Themed.welcomeImage}
-        style={Themed.styles.welcomeImage}
-        />
       </ReactNative.ImageBackground>
     );
   }

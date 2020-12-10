@@ -19,7 +19,7 @@ import Colors from '../constants/Colors';
 import useColorScheme from '../hooks/useColorScheme';
 
 // Background images
-export const welcomeBackground = require('../assets/images/welcomeBackground.jpg');
+export const resolverBackground = require('../assets/images/resolverBackground.jpg');
 export const welcomeImage = require('../assets/images/welcomeImage.jpg');
 
 export function useThemeColor(
@@ -61,11 +61,8 @@ export function View(props: ViewProps) {
 import Constants from 'expo-constants';
 export const styles = ReactNative.StyleSheet.create({
   image: {
-    height: '100%',
-    width: '100%',
-  },
-  welcomeImage: {
     height: ReactNative.Dimensions.get('screen').height,
+    width: ReactNative.Dimensions.get('screen').width,
   },
   container: {
     height: ReactNative.Dimensions.get('screen').height,

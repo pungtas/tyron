@@ -48,7 +48,7 @@ export default class Resolver extends React.Component {
 
     return (
       <ReactNative.ImageBackground
-        source={Themed.welcomeBackground}
+        source={Themed.resolverBackground}
         style={Themed.styles.image}
       >
         <ReactNative.View style={Themed.styles.resolverContainer}>
