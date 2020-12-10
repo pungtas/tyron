@@ -58,6 +58,7 @@ export function View(props: ViewProps) {
   return <ReactNative.View style={[{ backgroundColor }, style]} {...otherProps} />;
 }
 
+import Constants from 'expo-constants';
 export const styles = ReactNative.StyleSheet.create({
   image: {
     height: '100%',
@@ -72,6 +73,10 @@ export const styles = ReactNative.StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-around',
+    marginTop: Constants.statusBarHeight,
+  },
+  scrollView: {
+    marginHorizontal: 40,
   },
   tab: {
     marginBottom: 10,
@@ -98,6 +103,8 @@ export const styles = ReactNative.StyleSheet.create({
     padding: 5,
     borderRadius: 5,
     borderBottomWidth: 0,
+    alignItems: 'center',
+    flexDirection: 'row-reverse'
   },
   buttonText: {
     fontSize: 30,

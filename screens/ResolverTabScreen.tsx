@@ -154,13 +154,52 @@ export default class Resolver extends React.Component {
     const DID_RESOLVED = route.params.paramB;
 
     let RESULT = [];
+    let DID_DOCUMENT: DidDocument.default;
+    let RESOLUTION_METADATA: any;
+    let METADATA: any;
+
+    RESULT.push(`DID: ${DID_RESOLVED.id}`);
     if (DID_RESOLVED instanceof DidDocument.default) {
-      RESULT.push(`DID: ${DID_RESOLVED.id}`);
-      RESULT.push(`$XSGD public key: ${JSON.stringify(DID_RESOLVED.xsgdKey, null, 2)}`);
+      DID_DOCUMENT = DID_RESOLVED;
+    } else {
+      DID_DOCUMENT = DID_RESOLVED.document;
+      RESOLUTION_METADATA = DID_RESOLVED.resolutionMetadata;
+      METADATA = DID_RESOLVED.metadata;
+    }
+    if(DID_DOCUMENT.publicKey) {
+      RESULT.push(`General purpose public keys: ${JSON.stringify(DID_DOCUMENT.publicKey, null, 2)}`);
+    }
+    if(DID_DOCUMENT.xsgdKey !== undefined) {
+      RESULT.push(`$XSGD public key: ${JSON.stringify(DID_DOCUMENT.xsgdKey, null, 2)}`);
+    }
+    if(DID_DOCUMENT.authentication !== undefined) {
+      RESULT.push(`Authentication public key: ${JSON.stringify(DID_DOCUMENT.authentication, null, 2)}`);
+    }
+    if(DID_DOCUMENT.assertionMethod !== undefined) {
+      RESULT.push(`Assertion public key: ${JSON.stringify(DID_DOCUMENT.assertionMethod, null, 2)}`);
+    }
+    if(DID_DOCUMENT.capabilityDelegation !== undefined) {
+      RESULT.push(`Capability-delegation public key: ${JSON.stringify(DID_DOCUMENT.capabilityDelegation, null, 2)}`);
+    }
+    if(DID_DOCUMENT.capabilityInvocation !== undefined) {
+      RESULT.push(`Capability-invocation public key: ${JSON.stringify(DID_DOCUMENT.capabilityInvocation, null, 2)}`);
+    }
+    if(DID_DOCUMENT.keyAgreement !== undefined) {
+      RESULT.push(`Agreement public key: ${JSON.stringify(DID_DOCUMENT.keyAgreement, null, 2)}`);
+    }
+    if(DID_DOCUMENT.service !== undefined) {
+      RESULT.push(`Services: ${JSON.stringify(DID_DOCUMENT.service, null, 2)}`);
+    }
+    if(RESOLUTION_METADATA !== undefined) {
+      RESULT.push(`Resolution metadata: ${JSON.stringify(RESOLUTION_METADATA, null, 2)}`);
+    }
+    if(METADATA !== undefined) {
+      RESULT.push(`DID metadata: ${JSON.stringify(METADATA, null, 2)}`);
     }
 
     return (
       <Themed.View style={Themed.styles.container}>
+        <ReactNative.ScrollView style={Themed.styles.scrollView}>  
         <Themed.View>
           <Themed.Text style={Themed.styles.title}>
             {USERNAME}'s self-sovereign identity:
@@ -183,6 +222,7 @@ export default class Resolver extends React.Component {
             navigation.push("Resolve");
           }}
         />      
+      </ReactNative.ScrollView>
       </Themed.View>
     );
   }
