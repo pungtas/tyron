@@ -106,7 +106,8 @@ export const styles = ReactNative.StyleSheet.create({
     fontFamily: 'Ubuntu_400Regular',
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 20,
+    marginTop: 20,
+    marginBottom: 10,
     color: '#fff'
   },
   separator: {
@@ -115,8 +116,9 @@ export const styles = ReactNative.StyleSheet.create({
     width: '100%',
   },
   button: {
+    marginTop: 40,
     margin: 10,
-    backgroundColor: '#58929b',
+    backgroundColor: '#4e524f',
     padding: 5,
     borderRadius: 5,
     borderBottomWidth: 0,
@@ -130,16 +132,17 @@ export const styles = ReactNative.StyleSheet.create({
     fontFamily: 'Ubuntu_400Regular'
   },
   inputText: {
-    fontSize: 25,
+    fontSize: 20,
     color: '#7e9e81',
-    marginBottom: 20,
+    marginTop: 16,
+    marginBottom: 30,
     fontFamily: 'Ubuntu_400Regular'
   },
   options: {
-    backgroundColor: '#7e9e81',
-    fontSize: 20,
-    fontFamily: 'Ubuntu_400Regular',
+    backgroundColor: 'white',
     flexDirection: 'row',
+    marginTop: 10,
+    marginBottom: 10,
   },
   document: {
     backgroundColor: '#fff',
@@ -163,8 +166,8 @@ export const styles = ReactNative.StyleSheet.create({
 		height: 25,
 		width: 25,
 		borderRadius: 100,
-		borderWidth: 3,
-		borderColor: '#185c49',
+    borderWidth: 3,
+		borderColor: '#4e524f',
 		alignItems: 'center',
     justifyContent: 'center',
 	},
@@ -179,6 +182,6 @@ export const styles = ReactNative.StyleSheet.create({
 		width: 15,
 		height: 15,
 		borderRadius: 50,
-    backgroundColor: '#708b9b',
+    backgroundColor: '#4e524f',
   },
 });
