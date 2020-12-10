@@ -23,7 +23,7 @@ export type RootStackParamList = {
 
 export type BottomTabParamList = {
   Welcome: undefined;
-  Resolver: undefined;
+  'DID browser': undefined;
 };
 
 export type WelcomeTabParamList = {

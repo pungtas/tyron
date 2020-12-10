@@ -25,7 +25,7 @@ import { ResolverTabParamList } from '../types';
 
 const NETWORK = ['testnet', 'mainnet'];
 
-const RESOLUTION_CHOICE = ['DID-Document', 'DID-Resolution'];
+const RESOLUTION_CHOICE = ['with metadata'];
 
 const STATE = { loading: false };
 
@@ -51,7 +51,7 @@ export default class Resolver extends React.Component {
         source={Themed.welcomeBackground}
         style={Themed.styles.image}
       >
-        <ReactNative.View style={Themed.styles.scrollView}>
+        <ReactNative.View style={Themed.styles.resolverContainer}>
         <ReactNative.TextInput
           value = {username}
           style = {Themed.styles.inputText}
@@ -61,12 +61,11 @@ export default class Resolver extends React.Component {
           }}
         />
         <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
-        <ReactNative.Text style={Themed.styles.title}>Zilliqa network:</ReactNative.Text>
+        <ReactNative.Text style={Themed.styles.legend}>Zilliqa network:</ReactNative.Text>
         <Themed.View>
           {network.map((res: any) => {
             return (
               <ReactNative.View key={res} style={Themed.styles.options}>
-                <ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
                 <ReactNative.TouchableOpacity
                   style={Themed.styles.radioCircle}
                   onPress={() => {
@@ -77,17 +76,17 @@ export default class Resolver extends React.Component {
                   }}>
                     { networkValue === res && <ReactNative.View style={Themed.styles.selectedRb} />}
                 </ReactNative.TouchableOpacity>
+                <ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
               </ReactNative.View>
             );
           })}
         </Themed.View>
         <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
-        <ReactNative.Text style={Themed.styles.title}>Zilliqa network:</ReactNative.Text>
+        <ReactNative.Text style={Themed.styles.legend}>DID document:</ReactNative.Text>
         <Themed.View>
           {resolution.map((res: any) => {
             return (
               <ReactNative.View key={res} style={Themed.styles.options}>
-                <ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
                 <ReactNative.TouchableOpacity
                   style={Themed.styles.radioCircle}
                   onPress={() => {
@@ -98,13 +97,14 @@ export default class Resolver extends React.Component {
                   }}>
                     { resolutionValue === res && <ReactNative.View style={Themed.styles.selectedRb} />}
                 </ReactNative.TouchableOpacity>
+                <ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
               </ReactNative.View>
             );
           })}
         </Themed.View>
         <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
         <Submit
-          title = {`Resolve ${username}`}
+          title = {`Search for ${username}`}
           state = {state}
           onSubmission = {async() => {
             setState({
@@ -125,11 +125,12 @@ export default class Resolver extends React.Component {
             
             let ACCEPT: DidDocument.Accept;
             switch (resolutionValue) {
-                case 'DID-Document':
+                case 'with metadata':
+                    ACCEPT = DidDocument.Accept.Result
+                    break;
+                default:
                     ACCEPT = DidDocument.Accept.contentType                
                     break;
-                case 'DID-Resolution':
-                    ACCEPT = DidDocument.Accept.Result
             };
 
             const RESOLUTION_INPUT: DidDocument.ResolutionInput = {
@@ -160,7 +161,7 @@ export default class Resolver extends React.Component {
     let RESOLUTION_METADATA: any;
     let METADATA: any;
 
-    RESULT.push(`DID: ${DID_RESOLVED.id}`);
+    RESULT.push(<ReactNative.Text style={Themed.styles.documentLegend}>Decentralized Identifier:</ReactNative.Text>, `${DID_RESOLVED.id}`);
     if (DID_RESOLVED instanceof DidDocument.default) {
       DID_DOCUMENT = DID_RESOLVED;
     } else {
@@ -200,18 +201,18 @@ export default class Resolver extends React.Component {
     }
 
     return (
-      <Themed.View style={Themed.styles.container}>
+      <Themed.View style={Themed.styles.resolvedContainer}>
         <ReactNative.ScrollView style={Themed.styles.scrollView}>  
         <Themed.View>
           <Themed.Text style={Themed.styles.title}>
-            {USERNAME}'s self-sovereign identity:
+            for {USERNAME}:
           </Themed.Text>
           <Themed.View>
           {RESULT.map((res: any) => {
             return (
               <ReactNative.View key={res} style={Themed.styles.document}>
                 <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
-                <ReactNative.Text style={Themed.styles.options}>{res}</ReactNative.Text>
+                <ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
               </ReactNative.View>
             );
           })}
@@ -236,7 +237,7 @@ function Submit({ title, onSubmission, state }: { title: any, onSubmission: any,
     <Themed.Text style={Themed.styles.buttonText}>{title}</Themed.Text>
     {
       state.loading &&
-      <ReactNative.ActivityIndicator size="large" color="#00ff00" />
+      <ReactNative.ActivityIndicator size="large" color="#fff" />
     }
   </ReactNative.TouchableOpacity>
 }

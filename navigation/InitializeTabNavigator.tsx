@@ -31,7 +31,7 @@ export default function InitializeTabNavigator() {
           }}
         />
         <BottomTab.Screen
-          name="Resolver"
+          name="DID browser"
           component={Navigator.ResolverNavigator}
           options={{
             tabBarIcon: ({ color }) => <ResolverTabBarIcon name="rocket1" color={color}/>
@@ -97,10 +97,10 @@ class Navigator extends React.Component {
               headerTitleStyle: {
                 fontSize: 30,
                 fontFamily: 'Ubuntu_400Regular',
-                color: '#fff',
+                color: '#000000',
               },
               headerStyle: {
-                backgroundColor: '#021e55',
+                backgroundColor: '#fff',
               },
             }}
           />
@@ -125,10 +125,10 @@ class Navigator extends React.Component {
               headerTitleStyle: {
                 fontSize: 30,
                 fontFamily: 'Ubuntu_400Regular',
-                color: '#fff'
+                color: '#000000'
               },
               headerStyle: {
-                backgroundColor: '#021e55',
+                backgroundColor: '#fff',
               },
             }}
           />
@@ -136,14 +136,14 @@ class Navigator extends React.Component {
             name="Resolved"
             component={Resolver.default.ResolvedScreen}
             options={{
-              headerTitle: 'DID resolved',
+              headerTitle: 'Tyron self-sovereign identity',
               headerTitleStyle: {
                 fontSize: 30,
                 fontFamily: 'Ubuntu_400Regular',
                 color: '#fff'
               },
               headerStyle: {
-                backgroundColor: '#021e55',
+                backgroundColor: '#57ada5',
               },
             }}
           />

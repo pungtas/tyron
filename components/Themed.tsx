@@ -75,6 +75,13 @@ export const styles = ReactNative.StyleSheet.create({
     justifyContent: 'space-around',
     marginTop: Constants.statusBarHeight,
   },
+  resolverContainer: {
+    marginHorizontal: 40,
+    alignItems: 'flex-start'
+  },
+  resolvedContainer: {
+    flex: 1,
+  },
   scrollView: {
     marginHorizontal: 40,
   },
@@ -85,12 +92,29 @@ export const styles = ReactNative.StyleSheet.create({
   },
   title: {
     fontSize: 30,
+    fontWeight: 'bold',
     fontFamily: 'Ubuntu_400Regular',
     lineHeight: 40,
+    marginTop: 30,
+    marginBottom: 30,
+    marginHorizontal: 40,
+    color: '#57ada5'
+  },
+  legend: {
+    fontSize: 20,
+    fontFamily: 'Ubuntu_400Regular',
     fontWeight: 'bold',
     textAlign: 'center',
-    marginBottom: 40,
-    color: '#021e55'
+    marginBottom: 20,
+    color: '#fff'
+  },
+  documentLegend: {
+    fontSize: 20,
+    fontFamily: 'Ubuntu_400Regular',
+    fontWeight: 'bold',
+    textAlign: 'center',
+    marginBottom: 20,
+    color: '#57ada5'
   },
   separator: {
     marginVertical: 10,
@@ -107,7 +131,8 @@ export const styles = ReactNative.StyleSheet.create({
     flexDirection: 'row-reverse'
   },
   buttonText: {
-    fontSize: 30,
+    marginHorizontal: 20,
+    fontSize: 40,
     color: '#fff',
     fontFamily: 'Ubuntu_400Regular'
   },
@@ -121,21 +146,15 @@ export const styles = ReactNative.StyleSheet.create({
     backgroundColor: '#7e9e81',
     fontSize: 20,
     fontFamily: 'Ubuntu_400Regular',
-    flexDirection: 'row-reverse',
+    flexDirection: 'row',
   },
   document: {
-    backgroundColor: '#7e9e81',
+    backgroundColor: '#fff',
     fontSize: 20,
     fontFamily: 'Ubuntu_400Regular',
   },
-  radioText: {
-    marginRight: 35,
-    fontSize: 20,
-    fontFamily: 'Ubuntu_400Regular',
-    color: '#000',
-    fontWeight: '700'
-  },
-	radioCircle: {
+  radioCircle: {
+    marginHorizontal: 10,
 		height: 25,
 		width: 25,
 		borderRadius: 100,
@@ -144,6 +163,13 @@ export const styles = ReactNative.StyleSheet.create({
 		alignItems: 'center',
     justifyContent: 'center',
 	},
+  radioText: {
+    marginHorizontal: 3,
+    fontSize: 20,
+    fontFamily: 'Ubuntu_400Regular',
+    color: '#000',
+    fontWeight: '700'
+  },
 	selectedRb: {
 		width: 15,
 		height: 15,
