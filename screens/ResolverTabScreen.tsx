@@ -60,7 +60,6 @@ export default class Resolver extends React.Component {
             setUsername(username)
           }}
         />
-        <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
         <ReactNative.Text style={Themed.styles.legend}>Zilliqa network:</ReactNative.Text>
         <Themed.View>
           {network.map((res: any) => {
@@ -81,12 +80,11 @@ export default class Resolver extends React.Component {
             );
           })}
         </Themed.View>
-        <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
         <ReactNative.Text style={Themed.styles.legend}>DID document:</ReactNative.Text>
         <Themed.View>
           {resolution.map((res: any) => {
             return (
-              <ReactNative.View key={res} style={Themed.styles.options}>
+              <ReactNative.View key={res} style= {Themed.styles.options}>
                 <ReactNative.TouchableOpacity
                   style={Themed.styles.radioCircle}
                   onPress={() => {
@@ -102,7 +100,6 @@ export default class Resolver extends React.Component {
             );
           })}
         </Themed.View>
-        <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
         <Submit
           title = {`Search for ${username}`}
           state = {state}
