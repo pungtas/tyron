@@ -94,10 +94,12 @@ class Navigator extends React.Component {
             component={Welcome.default.WelcomeScreen}
             options={{ 
               headerTitle: 'Welcome to tyron.did',
+              headerTransparent: true,
               headerTitleStyle: {
                 fontSize: 30,
+                fontWeight: "700",
                 fontFamily: 'Ubuntu_400Regular',
-                color: '#000000',
+                color: '#fff',
               },
               headerStyle: {
                 backgroundColor: '#fff',
@@ -122,10 +124,12 @@ class Navigator extends React.Component {
             component={Resolver.default.ResolveScreen}
             options={{
               headerTitle: 'DID browser',
+              headerTransparent: true,
               headerTitleStyle: {
                 fontSize: 30,
+                fontWeight: "700",
                 fontFamily: 'Ubuntu_400Regular',
-                color: '#000000'
+                color: '#fff'
               },
               headerStyle: {
                 backgroundColor: '#fff',
@@ -139,6 +143,7 @@ class Navigator extends React.Component {
               headerTitle: 'Tyron self-sovereign identity',
               headerTitleStyle: {
                 fontSize: 30,
+                fontWeight: "700",
                 fontFamily: 'Ubuntu_400Regular',
                 color: '#fff'
               },

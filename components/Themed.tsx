@@ -76,6 +76,7 @@ export const styles = ReactNative.StyleSheet.create({
     marginTop: Constants.statusBarHeight,
   },
   resolverContainer: {
+    marginTop: 40,
     marginHorizontal: 40,
     alignItems: 'flex-start'
   },
@@ -108,14 +109,6 @@ export const styles = ReactNative.StyleSheet.create({
     marginBottom: 20,
     color: '#fff'
   },
-  documentLegend: {
-    fontSize: 20,
-    fontFamily: 'Ubuntu_400Regular',
-    fontWeight: 'bold',
-    textAlign: 'center',
-    marginBottom: 20,
-    color: '#57ada5'
-  },
   separator: {
     marginVertical: 10,
     height: 1,
@@ -132,7 +125,7 @@ export const styles = ReactNative.StyleSheet.create({
   },
   buttonText: {
     marginHorizontal: 20,
-    fontSize: 40,
+    fontSize: 30,
     color: '#fff',
     fontFamily: 'Ubuntu_400Regular'
   },
@@ -150,8 +143,20 @@ export const styles = ReactNative.StyleSheet.create({
   },
   document: {
     backgroundColor: '#fff',
+    marginHorizontal: 150,
+  },
+  documentLegend: {
     fontSize: 20,
     fontFamily: 'Ubuntu_400Regular',
+    fontWeight: 'bold',
+    marginBottom: 20,
+    color: '#57ada5'
+  },
+  documentDescription: {
+    fontSize: 20,
+    fontFamily: 'Ubuntu_400Regular',
+    color: '#000',
+    fontWeight: '700'
   },
   radioCircle: {
     marginHorizontal: 10,

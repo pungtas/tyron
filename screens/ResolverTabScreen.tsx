@@ -161,7 +161,7 @@ export default class Resolver extends React.Component {
     let RESOLUTION_METADATA: any;
     let METADATA: any;
 
-    RESULT.push(<ReactNative.Text style={Themed.styles.documentLegend}>Decentralized Identifier:</ReactNative.Text>, `${DID_RESOLVED.id}`);
+    RESULT.push(['Decentralized Identifier:', [DID_RESOLVED.id]]);
     if (DID_RESOLVED instanceof DidDocument.default) {
       DID_DOCUMENT = DID_RESOLVED;
     } else {
@@ -170,34 +170,48 @@ export default class Resolver extends React.Component {
       METADATA = DID_RESOLVED.metadata;
     }
     if(DID_DOCUMENT.publicKey) {
-      RESULT.push(`General purpose public keys: ${JSON.stringify(DID_DOCUMENT.publicKey, null, 2)}`);
+      RESULT.push(['General-purpose public key:', [DID_DOCUMENT.publicKey.publicKeyBase58]]);
     }
     if(DID_DOCUMENT.xsgdKey !== undefined) {
-      RESULT.push(`$XSGD public key: ${JSON.stringify(DID_DOCUMENT.xsgdKey, null, 2)}`);
+      RESULT.push(['$XSGD public key:', [DID_DOCUMENT.xsgdKey.publicKeyBase58]]);
     }
     if(DID_DOCUMENT.authentication !== undefined) {
-      RESULT.push(`Authentication public key: ${JSON.stringify(DID_DOCUMENT.authentication, null, 2)}`);
+      RESULT.push(['Authentication public key:', [DID_DOCUMENT.authentication.publicKeyBase58]]);
     }
     if(DID_DOCUMENT.assertionMethod !== undefined) {
-      RESULT.push(`Assertion public key: ${JSON.stringify(DID_DOCUMENT.assertionMethod, null, 2)}`);
+      RESULT.push(['Assertion public key:', [DID_DOCUMENT.assertionMethod.publicKeyBase58]]);
     }
     if(DID_DOCUMENT.capabilityDelegation !== undefined) {
-      RESULT.push(`Capability-delegation public key: ${JSON.stringify(DID_DOCUMENT.capabilityDelegation, null, 2)}`);
+      RESULT.push(['Capability-delegation public key:', [DID_DOCUMENT.capabilityDelegation.publicKeyBase58]]);
     }
     if(DID_DOCUMENT.capabilityInvocation !== undefined) {
-      RESULT.push(`Capability-invocation public key: ${JSON.stringify(DID_DOCUMENT.capabilityInvocation, null, 2)}`);
+      RESULT.push(['Capability-invocation public key:', [DID_DOCUMENT.capabilityInvocation.publicKeyBase58]]);
     }
     if(DID_DOCUMENT.keyAgreement !== undefined) {
-      RESULT.push(`Agreement public key: ${JSON.stringify(DID_DOCUMENT.keyAgreement, null, 2)}`);
+      RESULT.push(['Agreement public key:', [DID_DOCUMENT.keyAgreement.publicKeyBase58]]);
     }
     if(DID_DOCUMENT.service !== undefined) {
-      RESULT.push(`Services: ${JSON.stringify(DID_DOCUMENT.service, null, 2)}`);
+      let SERVICES = [];
+      for(let service of DID_DOCUMENT.service) {
+        const ID = service.id+ ': ';
+        const ENDPOINT = service.endpoint;
+        SERVICES.push([ID, ENDPOINT])
+
+      }
+      RESULT.push(['Services:', SERVICES]);
     }
     if(RESOLUTION_METADATA !== undefined) {
-      RESULT.push(`Resolution metadata: ${JSON.stringify(RESOLUTION_METADATA, null, 2)}`);
+      let INFO = [];
+      const ds_epoch = RESOLUTION_METADATA.result.CurrentDSEpoch;
+      INFO.push(['DS block number: ', ds_epoch]);
+      const sharding = RESOLUTION_METADATA.result.ShardingStructure.NumPeers;
+      INFO.push('Blockchain sharding structure: ', `${JSON.stringify(sharding)}`);
+      const node = RESOLUTION_METADATA.req.url;
+      INFO.push('Node URL: ', node);
+      RESULT.push(['Resolution metadata:', INFO]);
     }
     if(METADATA !== undefined) {
-      RESULT.push(`DID metadata: ${JSON.stringify(METADATA, null, 2)}`);
+      RESULT.push(['DID metadata:', ['Update key', METADATA.updateKey]]);
     }
 
     return (
@@ -205,18 +219,25 @@ export default class Resolver extends React.Component {
         <ReactNative.ScrollView style={Themed.styles.scrollView}>  
         <Themed.View>
           <Themed.Text style={Themed.styles.title}>
-            for {USERNAME}:
+            of {USERNAME}:
           </Themed.Text>
           <Themed.View>
-          {RESULT.map((res: any) => {
-            return (
+          { RESULT.map((res: any) => {
+            return(
               <ReactNative.View key={res} style={Themed.styles.document}>
-                <Themed.View style={Themed.styles.separator} lightColor="#eee" darkColor="#008080" />
-                <ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
+                <ReactNative.Text style={Themed.styles.documentLegend}>{res[0]}</ReactNative.Text>
+                { res[1].map((element: any) => {
+                    return(
+                      <ReactNative.View key={element} style={Themed.styles.document}>
+                      <ReactNative.Text style={Themed.styles.documentDescription}>{element}</ReactNative.Text>
+                      </ReactNative.View>
+                    );
+                  })}
+                <Themed.View style={Themed.styles.separator} lightColor="#57ada5" darkColor="#008080" />
               </ReactNative.View>
             );
           })}
-        </Themed.View>
+          </Themed.View>
         </Themed.View>
         <Submit
           title={`Go back to the browser`}
