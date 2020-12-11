@@ -31,7 +31,7 @@ export default function InitializeTabNavigator() {
         initialRouteName="Welcome"
         tabBarOptions={ { 
           activeTintColor: '#000',
-          activeBackgroundColor: '#e6c422',
+          activeBackgroundColor: '#fff',
           inactiveBackgroundColor: '#000',
           labelStyle: {
             fontSize: 30,
@@ -62,13 +62,13 @@ export default function InitializeTabNavigator() {
 // https://icons.expo.fyi/
 function WelcomeTabBarIcon(props: { name: string; color: string }) {
   return(
-    <Ionicons size={25} style={Themed.styles.tab} {...props} />
+    <Ionicons size={27} style={Themed.styles.tab} {...props} />
   );
 }
 
 function ResolverTabBarIcon(props: { name: string; color: string }) {
   return(
-    <Icons.AntDesign size={25} style={Themed.styles.tab} {...props} />
+    <Icons.AntDesign size={27} style={Themed.styles.tab} {...props} />
   );
 }
 

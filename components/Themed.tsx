@@ -73,7 +73,8 @@ export const styles = ReactNative.StyleSheet.create({
     marginTop: Constants.statusBarHeight,
   },
   resolverContainer: {
-    marginTop: 83,
+    flex: 1,
+    marginTop: 95,
     marginHorizontal: 40,
     alignItems: 'flex-start'
   },
@@ -100,9 +101,9 @@ export const styles = ReactNative.StyleSheet.create({
     fontWeight: '800',
     fontFamily: 'Ubuntu_400Regular',
     textAlign: 'center',
-    marginTop: 20,
+    marginTop: 25,
     marginBottom: 10,
-    color: '#fff'
+    color: '#cccccc'
   },
   separator: {
     marginVertical: 10,
@@ -127,10 +128,9 @@ export const styles = ReactNative.StyleSheet.create({
     fontWeight: '400'
   },
   inputText: {
-    fontSize: 22,
+    fontSize: 24,
     color: '#000',
-    marginTop: 17,
-    marginBottom: 30,
+    marginBottom: 50,
     fontFamily: 'Ubuntu_400Regular'
   },
   options: {
@@ -158,6 +158,11 @@ export const styles = ReactNative.StyleSheet.create({
     fontFamily: 'Ubuntu_400Regular',
     color: '#000',
   },
+  documentItem: {
+    fontSize: 20,
+    fontFamily: 'Ubuntu_400Regular',
+    color: '#e6c422',
+  },
   radioCircle: {
     marginHorizontal: 10,
 		height: 25,
@@ -179,6 +184,6 @@ export const styles = ReactNative.StyleSheet.create({
 		width: 15,
 		height: 15,
 		borderRadius: 50,
-    backgroundColor: '#4e524f',
+    backgroundColor: '#cccccc',
   },
 });

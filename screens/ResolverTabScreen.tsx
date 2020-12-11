@@ -52,98 +52,98 @@ export default class Resolver extends React.Component {
         style={Themed.styles.image}
       >
         <ReactNative.View style={Themed.styles.resolverContainer}>
-        <ReactNative.TextInput
-          value = {username}
-          style = {Themed.styles.inputText}
-          placeholder = "Enter username.did"
-          onChangeText = {username => {
-            setUsername(username)
-          }}
-        />
-        <ReactNative.Text style={Themed.styles.legend}>Zilliqa network:</ReactNative.Text>
-        <Themed.View style={Themed.styles.options2}>
-          {network.map((res: any) => {
-            return (
-              <ReactNative.View key={res} style={Themed.styles.options}>
-                <ReactNative.TouchableOpacity
-                  style={Themed.styles.radioCircle}
-                  onPress={() => {
-                    setNetworkState({
-                      networkValue: res,
-                    });
-                    setNetwork(network);
-                  }}>
-                    { networkValue === res && <ReactNative.View style={Themed.styles.selectedRb} />}
-                </ReactNative.TouchableOpacity>
-                <ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
-              </ReactNative.View>
-            );
-          })}
-        </Themed.View>
-        <ReactNative.Text style={Themed.styles.legend}>DID document:</ReactNative.Text>
-        <Themed.View style={Themed.styles.options}>
-          {resolution.map((res: any) => {
-            return (
-              <ReactNative.View key={res} style= {Themed.styles.options}>
-                <ReactNative.TouchableOpacity
-                  style={Themed.styles.radioCircle}
-                  onPress={() => {
-                    setResolutionState({
-                      resolutionValue: res,
-                    });
-                    setResolution(resolution);
-                  }}>
-                    { resolutionValue === res && <ReactNative.View style={Themed.styles.selectedRb} />}
-                </ReactNative.TouchableOpacity>
-                <ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
-              </ReactNative.View>
-            );
-          })}
-        </Themed.View>
-        <Submit
-          title = {`Search for ${username}`}
-          state = {state}
-          onSubmission = {async() => {
-            setState({
-              loading: true
-            });
+          <ReactNative.TextInput
+            value = {username}
+            style = {Themed.styles.inputText}
+            placeholder = "Enter username.did"
+            onChangeText = {username => {
+              setUsername(username)
+            }}
+          />
+          <ReactNative.Text style={Themed.styles.legend}>Zilliqa network:</ReactNative.Text>
+          <Themed.View style={Themed.styles.options2}>
+            {network.map((res: any) => {
+              return (
+                <ReactNative.View key={res} style={Themed.styles.options}>
+                  <ReactNative.TouchableOpacity
+                    style={Themed.styles.radioCircle}
+                    onPress={() => {
+                      setNetworkState({
+                        networkValue: res,
+                      });
+                      setNetwork(network);
+                    }}>
+                      { networkValue === res && <ReactNative.View style={Themed.styles.selectedRb} />}
+                  </ReactNative.TouchableOpacity>
+                  <ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
+                </ReactNative.View>
+              );
+            })}
+          </Themed.View>
+          <ReactNative.Text style={Themed.styles.legend}>DID document:</ReactNative.Text>
+          <Themed.View style={Themed.styles.options}>
+            {resolution.map((res: any) => {
+              return (
+                <ReactNative.View key={res} style= {Themed.styles.options}>
+                  <ReactNative.TouchableOpacity
+                    style={Themed.styles.radioCircle}
+                    onPress={() => {
+                      setResolutionState({
+                        resolutionValue: res,
+                      });
+                      setResolution(resolution);
+                    }}>
+                      { resolutionValue === res && <ReactNative.View style={Themed.styles.selectedRb} />}
+                  </ReactNative.TouchableOpacity>
+                  <ReactNative.Text style={Themed.styles.radioText}>{res}</ReactNative.Text>
+                </ReactNative.View>
+              );
+            })}
+          </Themed.View>
+          <Submit
+            title = {`Search for ${username}`}
+            state = {state}
+            onSubmission = {async() => {
+              setState({
+                loading: true
+              });
 
-            switch (networkValue) {
-              case 'testnet':
-                NETWORK_NAMESPACE = Scheme.NetworkNamespace.Testnet;
-                INIT_TYRON = TyronZIL.InitTyron.Testnet;
-                break;
-              case 'mainnet':
-                NETWORK_NAMESPACE = Scheme.NetworkNamespace.Mainnet;
-                INIT_TYRON = TyronZIL.InitTyron.Mainnet;
-                break;
-            };
-            const DIDC_ADDR = await DidResolver.default.resolveDns(NETWORK_NAMESPACE, INIT_TYRON, username);
-            
-            let ACCEPT: DidDocument.Accept;
-            switch (resolutionValue) {
-                case 'with metadata':
-                    ACCEPT = DidDocument.Accept.Result
-                    break;
-                default:
-                    ACCEPT = DidDocument.Accept.contentType                
-                    break;
-            };
+              switch (networkValue) {
+                case 'testnet':
+                  NETWORK_NAMESPACE = Scheme.NetworkNamespace.Testnet;
+                  INIT_TYRON = TyronZIL.InitTyron.Testnet;
+                  break;
+                case 'mainnet':
+                  NETWORK_NAMESPACE = Scheme.NetworkNamespace.Mainnet;
+                  INIT_TYRON = TyronZIL.InitTyron.Mainnet;
+                  break;
+              };
+              const DIDC_ADDR = await DidResolver.default.resolveDns(NETWORK_NAMESPACE, INIT_TYRON, username);
+              
+              let ACCEPT: DidDocument.Accept;
+              switch (resolutionValue) {
+                  case 'with metadata':
+                      ACCEPT = DidDocument.Accept.Result
+                      break;
+                  default:
+                      ACCEPT = DidDocument.Accept.contentType                
+                      break;
+              };
 
-            const RESOLUTION_INPUT: DidDocument.ResolutionInput = {
-                didcAddr: DIDC_ADDR,
-                metadata : {
-                    accept: ACCEPT
-                }
-            };
-            /** Resolves the Tyron DID */        
-            await DidDocument.default.resolution(NETWORK_NAMESPACE, RESOLUTION_INPUT)
-            .then(async did_resolved => {
-                navigation.push('Resolved', { paramA: username, paramB: did_resolved })
-            })
-            .catch((_err: any) => { navigation.push('Resolve') })          
-          }}
-        />
+              const RESOLUTION_INPUT: DidDocument.ResolutionInput = {
+                  didcAddr: DIDC_ADDR,
+                  metadata : {
+                      accept: ACCEPT
+                  }
+              };
+              /** Resolves the Tyron DID */        
+              await DidDocument.default.resolution(NETWORK_NAMESPACE, RESOLUTION_INPUT)
+              .then(async did_resolved => {
+                  navigation.push('Resolved', { paramA: username, paramB: did_resolved })
+              })
+              .catch((_err: any) => { navigation.push('Resolve') })          
+            }}
+          />
         </ReactNative.View>
       </ReactNative.ImageBackground>
     );
@@ -192,22 +192,37 @@ export default class Resolver extends React.Component {
       for(let service of DID_DOCUMENT.service) {
         const HASH_INDEX = service.id.lastIndexOf("#");
         const ID = service.id.substring(HASH_INDEX+1)+': ';
-        SERVICES.push([ID, service.endpoint])
+        SERVICES.push([
+          <ReactNative.Text style={Themed.styles.documentItem}>{ID}: </ReactNative.Text>, service.endpoint
+        ])
       }
       RESULT.push([`${USERNAME}'s services:`, SERVICES]);
     }
     if(RESOLUTION_METADATA !== undefined) {
       let INFO = [];
       const ds_epoch = RESOLUTION_METADATA.result.CurrentDSEpoch;
-      INFO.push(['DS block number: ', ds_epoch]);
+      INFO.push([
+        <ReactNative.Text style={Themed.styles.documentItem}>DS block number: </ReactNative.Text>, ds_epoch
+      ]);
       const sharding = RESOLUTION_METADATA.result.ShardingStructure.NumPeers;
-      INFO.push('Blockchain sharding structure: ', `${JSON.stringify(sharding)}`);
+      INFO.push([
+        <ReactNative.Text style={Themed.styles.documentItem}>Blockchain sharding structure: </ReactNative.Text>, sharding
+      ]);
       const node = RESOLUTION_METADATA.req.url;
-      INFO.push('Node URL: ', node);
-      RESULT.push(['Resolution metadata:', INFO]);
+      INFO.push([
+        <ReactNative.Text style={Themed.styles.documentItem}>Node URL: </ReactNative.Text>, node
+      ]);
+      RESULT.push(['Resolution metadata', INFO]);
     }
     if(METADATA !== undefined) {
-      RESULT.push(['DID metadata:', ['Update key', METADATA.updateKey]]);
+      let DID_METADATA = [];
+      DID_METADATA.push([
+        <ReactNative.Text style={Themed.styles.documentItem}>Update key: </ReactNative.Text>, METADATA.updateKey
+      ]);
+      DID_METADATA.push([
+        <ReactNative.Text style={Themed.styles.documentItem}>Recovery key: </ReactNative.Text>, METADATA.recoveryKey
+      ]);
+      RESULT.push(['DID metadata:', DID_METADATA]);
     }
 
     return (
