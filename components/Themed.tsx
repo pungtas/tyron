@@ -153,15 +153,15 @@ export const styles = ReactNative.StyleSheet.create({
     marginBottom: 25,
     color: '#e6c422'
   },
-  documentDescription: {
-    fontSize: 20,
-    fontFamily: 'Ubuntu_400Regular',
-    color: '#000',
-  },
   documentItem: {
     fontSize: 20,
     fontFamily: 'Ubuntu_400Regular',
     color: '#e6c422',
+  },
+  documentDescription: {
+    fontSize: 20,
+    fontFamily: 'Ubuntu_400Regular',
+    color: '#fff',
   },
   radioCircle: {
     marginHorizontal: 10,
