@@ -195,7 +195,7 @@ export default class Resolver extends React.Component {
         SERVICES.push([
           <ReactNative.Text style={Themed.styles.documentItem}>{ID}: </ReactNative.Text>,
           <ReactNative.Text 
-          style={{color: 'blue'}}
+          style={{color: '#e7ff00'}}
           onPress={() => ReactNative.Linking.openURL(service.endpoint)}>
             {service.endpoint}
           </ReactNative.Text>

@@ -133,7 +133,7 @@ class Navigator extends React.Component {
             name="Resolved"
             component={Resolver.default.ResolvedScreen}
             options={{
-              headerTitle: 'Tyron self-sovereign identity',
+              headerTitle: 'Self-sovereign identity',
               headerTitleStyle: {
                 fontSize: 30,
                 fontWeight: "700",
