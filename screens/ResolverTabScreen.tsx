@@ -193,7 +193,12 @@ export default class Resolver extends React.Component {
         const HASH_INDEX = service.id.lastIndexOf("#");
         const ID = service.id.substring(HASH_INDEX+1);
         SERVICES.push([
-          <ReactNative.Text style={Themed.styles.documentItem}>{ID}: </ReactNative.Text>, service.endpoint
+          <ReactNative.Text style={Themed.styles.documentItem}>{ID}: </ReactNative.Text>,
+          <ReactNative.Text 
+          style={{color: 'blue'}}
+          onPress={() => ReactNative.Linking.openURL(service.endpoint)}>
+            {service.endpoint}
+          </ReactNative.Text>
         ])
       }
       RESULT.push([`${USERNAME}'s services:`, SERVICES]);
