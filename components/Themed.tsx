@@ -96,9 +96,9 @@ export const styles = ReactNative.StyleSheet.create({
     color: '#e6c422'
   },
   legend: {
-    fontSize: 20,
+    fontSize: 25,
+    fontWeight: '800',
     fontFamily: 'Ubuntu_400Regular',
-    fontWeight: 'bold',
     textAlign: 'center',
     marginTop: 20,
     marginBottom: 10,
@@ -136,6 +136,11 @@ export const styles = ReactNative.StyleSheet.create({
   options: {
     flexDirection: 'row',
     marginVertical: 10,
+    backgroundColor: 'transparent'
+  },
+  options2: {
+    marginVertical: 10,
+    backgroundColor: 'transparent'
   },
   document: {
     marginHorizontal: 150,
@@ -143,7 +148,7 @@ export const styles = ReactNative.StyleSheet.create({
   documentLegend: {
     fontSize: 20,
     fontFamily: 'Ubuntu_400Regular',
-    fontWeight: 'bold',
+    fontWeight: '700',
     marginTop: 25,
     marginBottom: 25,
     color: '#e6c422'
@@ -152,7 +157,6 @@ export const styles = ReactNative.StyleSheet.create({
     fontSize: 20,
     fontFamily: 'Ubuntu_400Regular',
     color: '#000',
-    fontWeight: '700'
   },
   radioCircle: {
     marginHorizontal: 10,
@@ -168,8 +172,8 @@ export const styles = ReactNative.StyleSheet.create({
     marginHorizontal: 2,
     fontSize: 20,
     fontFamily: 'Ubuntu_400Regular',
-    color: '#000',
-    fontWeight: '700'
+    color: '#fff',
+    fontWeight: '500',
   },
 	selectedRb: {
 		width: 15,

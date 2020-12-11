@@ -61,7 +61,7 @@ export default class Resolver extends React.Component {
           }}
         />
         <ReactNative.Text style={Themed.styles.legend}>Zilliqa network:</ReactNative.Text>
-        <Themed.View>
+        <Themed.View style={Themed.styles.options2}>
           {network.map((res: any) => {
             return (
               <ReactNative.View key={res} style={Themed.styles.options}>
@@ -81,7 +81,7 @@ export default class Resolver extends React.Component {
           })}
         </Themed.View>
         <ReactNative.Text style={Themed.styles.legend}>DID document:</ReactNative.Text>
-        <Themed.View>
+        <Themed.View style={Themed.styles.options}>
           {resolution.map((res: any) => {
             return (
               <ReactNative.View key={res} style= {Themed.styles.options}>
