@@ -2,8 +2,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { createStackNavigator } from '@react-navigation/stack';
 import * as React from 'react';
-import Colors from '../constants/Colors';
-import useColorScheme from '../hooks/useColorScheme';
 import * as Welcome from '../screens/WelcomeTabScreen';
 import * as Resolver from '../screens/ResolverTabScreen';
 import { BottomTabParamList, WelcomeTabParamList, ResolverTabParamList } from '../types';
@@ -15,13 +13,32 @@ import { AppLoading } from 'expo';
 
 const BottomTab = createBottomTabNavigator<BottomTabParamList>();
 
-export default function InitializeTabNavigator() {
-  const colorScheme = useColorScheme();
+let font_state = {
+  fontsLoaded: false,
+};
 
+let customFonts = {
+  Ubuntu_400Regular
+};
+
+async function _loadFontsAsync() {
+  await Font.loadAsync(customFonts);
+}
+
+export default function InitializeTabNavigator() {
   return(
       <BottomTab.Navigator
         initialRouteName="Welcome"
-        tabBarOptions={ { activeTintColor: Colors[colorScheme].tint }}
+        tabBarOptions={ { 
+          activeTintColor: '#000',
+          activeBackgroundColor: '#e6c422',
+          inactiveBackgroundColor: '#000',
+          labelStyle: {
+            fontSize: 30,
+            fontWeight: '600',
+            fontFamily: 'Ubuntu_400Regular',
+          },
+        }}
         >
         <BottomTab.Screen
           name="Welcome"
@@ -45,13 +62,13 @@ export default function InitializeTabNavigator() {
 // https://icons.expo.fyi/
 function WelcomeTabBarIcon(props: { name: string; color: string }) {
   return(
-    <Ionicons size={40} style={Themed.styles.tab} {...props} />
+    <Ionicons size={25} style={Themed.styles.tab} {...props} />
   );
 }
 
 function ResolverTabBarIcon(props: { name: string; color: string }) {
   return(
-    <Icons.AntDesign size={40} style={Themed.styles.tab} {...props} />
+    <Icons.AntDesign size={25} style={Themed.styles.tab} {...props} />
   );
 }
 
@@ -60,18 +77,6 @@ function ResolverTabBarIcon(props: { name: string; color: string }) {
 
 const WelcomeTabStack = createStackNavigator<WelcomeTabParamList>();
 const ResolverTabStack = createStackNavigator<ResolverTabParamList>();
-
-let font_state = {
-  fontsLoaded: false,
-};
-
-let customFonts = {
-  Ubuntu_400Regular
-};
-
-async function _loadFontsAsync() {
-  await Font.loadAsync(customFonts);
-}
 
 class Navigator extends React.Component {
   static componentDidMount(): any {
@@ -93,17 +98,8 @@ class Navigator extends React.Component {
             name="WelcomeTabScreen"
             component={Welcome.default.WelcomeScreen}
             options={{ 
-              headerTitle: 'Welcome to tyron.did',
+              headerTitle: '',
               headerTransparent: true,
-              headerTitleStyle: {
-                fontSize: 30,
-                fontWeight: "700",
-                fontFamily: 'Ubuntu_400Regular',
-                color: '#fff',
-              },
-              headerStyle: {
-                backgroundColor: '#fff',
-              },
             }}
           />
         </WelcomeTabStack.Navigator>
@@ -131,9 +127,6 @@ class Navigator extends React.Component {
                 fontFamily: 'Ubuntu_400Regular',
                 color: '#fff'
               },
-              headerStyle: {
-                backgroundColor: '#fff',
-              },
             }}
           />
           <ResolverTabStack.Screen
@@ -145,10 +138,10 @@ class Navigator extends React.Component {
                 fontSize: 30,
                 fontWeight: "700",
                 fontFamily: 'Ubuntu_400Regular',
-                color: '#fff'
+                color: '#e6c422'
               },
               headerStyle: {
-                backgroundColor: '#57ada5',
+                backgroundColor: '#000',
               },
             }}
           />

@@ -73,18 +73,15 @@ export const styles = ReactNative.StyleSheet.create({
     marginTop: Constants.statusBarHeight,
   },
   resolverContainer: {
-    marginTop: 40,
+    marginTop: 83,
     marginHorizontal: 40,
     alignItems: 'flex-start'
   },
   resolvedContainer: {
     flex: 1,
-  },
-  scrollView: {
     marginHorizontal: 40,
   },
   tab: {
-    marginBottom: 10,
     alignItems: 'center',
     justifyContent: 'center'
   },
@@ -93,10 +90,10 @@ export const styles = ReactNative.StyleSheet.create({
     fontWeight: 'bold',
     fontFamily: 'Ubuntu_400Regular',
     lineHeight: 40,
-    marginTop: 30,
+    marginTop: 20,
     marginBottom: 30,
     marginHorizontal: 40,
-    color: '#57ada5'
+    color: '#e6c422'
   },
   legend: {
     fontSize: 20,
@@ -113,9 +110,8 @@ export const styles = ReactNative.StyleSheet.create({
     width: '100%',
   },
   button: {
-    marginTop: 40,
-    margin: 10,
-    backgroundColor: '#4e524f',
+    marginVertical: 40,
+    backgroundColor: '#e6c422',
     padding: 5,
     borderRadius: 5,
     borderBottomWidth: 0,
@@ -123,34 +119,34 @@ export const styles = ReactNative.StyleSheet.create({
     flexDirection: 'row-reverse'
   },
   buttonText: {
+    marginVertical: 10,
     marginHorizontal: 20,
     fontSize: 30,
-    color: '#fff',
-    fontFamily: 'Ubuntu_400Regular'
+    color: '#000',
+    fontFamily: 'Ubuntu_400Regular',
+    fontWeight: '400'
   },
   inputText: {
-    fontSize: 20,
-    color: '#7e9e81',
-    marginTop: 16,
+    fontSize: 22,
+    color: '#000',
+    marginTop: 17,
     marginBottom: 30,
     fontFamily: 'Ubuntu_400Regular'
   },
   options: {
-    backgroundColor: 'white',
     flexDirection: 'row',
-    marginTop: 10,
-    marginBottom: 10,
+    marginVertical: 10,
   },
   document: {
-    backgroundColor: '#fff',
     marginHorizontal: 150,
   },
   documentLegend: {
     fontSize: 20,
     fontFamily: 'Ubuntu_400Regular',
     fontWeight: 'bold',
-    marginBottom: 20,
-    color: '#57ada5'
+    marginTop: 25,
+    marginBottom: 25,
+    color: '#e6c422'
   },
   documentDescription: {
     fontSize: 20,
@@ -164,12 +160,12 @@ export const styles = ReactNative.StyleSheet.create({
 		width: 25,
 		borderRadius: 100,
     borderWidth: 3,
-		borderColor: '#4e524f',
+		borderColor: '#e6c422',
 		alignItems: 'center',
     justifyContent: 'center',
 	},
   radioText: {
-    marginHorizontal: 3,
+    marginHorizontal: 2,
     fontSize: 20,
     fontFamily: 'Ubuntu_400Regular',
     color: '#000',

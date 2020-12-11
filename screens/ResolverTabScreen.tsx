@@ -158,7 +158,7 @@ export default class Resolver extends React.Component {
     let RESOLUTION_METADATA: any;
     let METADATA: any;
 
-    RESULT.push(['Decentralized Identifier:', [DID_RESOLVED.id]]);
+    RESULT.push(['Decentralized Identifier', [DID_RESOLVED.id]]);
     if (DID_RESOLVED instanceof DidDocument.default) {
       DID_DOCUMENT = DID_RESOLVED;
     } else {
@@ -167,35 +167,34 @@ export default class Resolver extends React.Component {
       METADATA = DID_RESOLVED.metadata;
     }
     if(DID_DOCUMENT.publicKey) {
-      RESULT.push(['General-purpose public key:', [DID_DOCUMENT.publicKey.publicKeyBase58]]);
+      RESULT.push(['General-purpose public key', [DID_DOCUMENT.publicKey.publicKeyBase58]]);
     }
     if(DID_DOCUMENT.xsgdKey !== undefined) {
-      RESULT.push(['$XSGD public key:', [DID_DOCUMENT.xsgdKey.publicKeyBase58]]);
+      RESULT.push(['$XSGD public key', [DID_DOCUMENT.xsgdKey.publicKeyBase58]]);
     }
     if(DID_DOCUMENT.authentication !== undefined) {
-      RESULT.push(['Authentication public key:', [DID_DOCUMENT.authentication.publicKeyBase58]]);
+      RESULT.push(['Authentication public key', [DID_DOCUMENT.authentication.publicKeyBase58]]);
     }
     if(DID_DOCUMENT.assertionMethod !== undefined) {
-      RESULT.push(['Assertion public key:', [DID_DOCUMENT.assertionMethod.publicKeyBase58]]);
+      RESULT.push(['Assertion public key', [DID_DOCUMENT.assertionMethod.publicKeyBase58]]);
     }
     if(DID_DOCUMENT.capabilityDelegation !== undefined) {
-      RESULT.push(['Capability-delegation public key:', [DID_DOCUMENT.capabilityDelegation.publicKeyBase58]]);
+      RESULT.push(['Capability-delegation public key', [DID_DOCUMENT.capabilityDelegation.publicKeyBase58]]);
     }
     if(DID_DOCUMENT.capabilityInvocation !== undefined) {
-      RESULT.push(['Capability-invocation public key:', [DID_DOCUMENT.capabilityInvocation.publicKeyBase58]]);
+      RESULT.push(['Capability-invocation public key', [DID_DOCUMENT.capabilityInvocation.publicKeyBase58]]);
     }
     if(DID_DOCUMENT.keyAgreement !== undefined) {
-      RESULT.push(['Agreement public key:', [DID_DOCUMENT.keyAgreement.publicKeyBase58]]);
+      RESULT.push(['Agreement public key', [DID_DOCUMENT.keyAgreement.publicKeyBase58]]);
     }
     if(DID_DOCUMENT.service !== undefined) {
       let SERVICES = [];
       for(let service of DID_DOCUMENT.service) {
-        const ID = service.id+ ': ';
-        const ENDPOINT = service.endpoint;
-        SERVICES.push([ID, ENDPOINT])
-
+        const HASH_INDEX = service.id.lastIndexOf("#");
+        const ID = service.id.substring(HASH_INDEX+1)+': ';
+        SERVICES.push([ID, service.endpoint])
       }
-      RESULT.push(['Services:', SERVICES]);
+      RESULT.push([`${USERNAME}'s services:`, SERVICES]);
     }
     if(RESOLUTION_METADATA !== undefined) {
       let INFO = [];
@@ -213,8 +212,7 @@ export default class Resolver extends React.Component {
 
     return (
       <Themed.View style={Themed.styles.resolvedContainer}>
-        <ReactNative.ScrollView style={Themed.styles.scrollView}>  
-        <Themed.View>
+        <ReactNative.ScrollView>
           <Themed.Text style={Themed.styles.title}>
             of {USERNAME}:
           </Themed.Text>
@@ -225,24 +223,14 @@ export default class Resolver extends React.Component {
                 <ReactNative.Text style={Themed.styles.documentLegend}>{res[0]}</ReactNative.Text>
                 { res[1].map((element: any) => {
                     return(
-                      <ReactNative.View key={element} style={Themed.styles.document}>
                       <ReactNative.Text style={Themed.styles.documentDescription}>{element}</ReactNative.Text>
-                      </ReactNative.View>
                     );
                   })}
-                <Themed.View style={Themed.styles.separator} lightColor="#57ada5" darkColor="#008080" />
+                <Themed.View style={Themed.styles.separator} lightColor="#e6c422" darkColor="#008080" />
               </ReactNative.View>
             );
           })}
-          </Themed.View>
-        </Themed.View>
-        <Submit
-          title={`Go back to the browser`}
-          state={STATE}
-          onSubmission={async() => {
-            navigation.push("Resolve");
-          }}
-        />      
+          </Themed.View> 
       </ReactNative.ScrollView>
       </Themed.View>
     );
@@ -255,7 +243,7 @@ function Submit({ title, onSubmission, state }: { title: any, onSubmission: any,
     <Themed.Text style={Themed.styles.buttonText}>{title}</Themed.Text>
     {
       state.loading &&
-      <ReactNative.ActivityIndicator size="large" color="#fff" />
+      <ReactNative.ActivityIndicator size="large" color="#000000" />
     }
   </ReactNative.TouchableOpacity>
 }
