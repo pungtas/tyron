@@ -18,8 +18,16 @@ With tyron, the user is in control of their self-sovereign identity and must be 
 
 Self-Sovereign Identity (SSI) allows people to manage their digital identities, proving who they are without a middleman, by anchoring DIDs on blockchain platforms as a shared root of trust. However, most blockchains still can't provide decentralized identity at scale. By implementing the Tyron SSI Protocol, we aim to solve this issue and enable user-controlled digital identities.
 
-The word Tyron derives from the Greek *turannos* that means sovereign, and ***Tyron's purpose is to give people sovereignty over their data***.
+The word Tyron derives from the Greek *turannos* that means sovereign, and **Tyron's purpose is to give people sovereignty over their data**.
+
+## Use cases
+
+Self-sovereign identity technologies are key for human-economic development.
+
+Tyron gives stakeholders of the Zilliqa blockchain platform and broader crypto space an entity that is much more than an address. With Scilla smart contracts, the digital identity can show public information such as services provided by the user (websites, cryptocurrency addresses) as well as showing the cryptographic public keys to engage in encrypted DID communication and verify signatures in W3C credentials.
+
+Stakeholders such as stakers, operators, financial companies (stablecoins & exchanges) and dApps can benefit from tyron's SSI account system and empower their users through integrations with, e.g. zilswap.
 
 ## Contributing
 
-It'd be great to have your help! Please refer to the [contributing guideline](./CONTRIBUTING.md) and [code of conduct](./CODE_OF_CONDUCT.md) :high_brightness:
+It'd be great to have your help! Please refer to the [contributing guideline](./CONTRIBUTING.md) and [code of conduct](./CODE_OF_CONDUCT.md) :zap:

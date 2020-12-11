@@ -21,6 +21,7 @@ import useColorScheme from '../hooks/useColorScheme';
 // Background images
 export const resolverBackground = require('../assets/images/resolverBackground.jpg');
 export const welcomeImage = require('../assets/images/welcomeImage.jpg');
+export const didNet = require('../assets/images/didnet.jpg');
 
 export function useThemeColor(
   props: { light?: string; dark?: string },
@@ -63,6 +64,7 @@ export const styles = ReactNative.StyleSheet.create({
   image: {
     height: ReactNative.Dimensions.get('screen').height,
     width: ReactNative.Dimensions.get('screen').width,
+    flex: 1,
   },
   container: {
     height: ReactNative.Dimensions.get('screen').height,
@@ -70,7 +72,6 @@ export const styles = ReactNative.StyleSheet.create({
     flex: 1,
     alignItems: 'center',
     justifyContent: 'space-around',
-    marginTop: Constants.statusBarHeight,
   },
   resolverContainer: {
     flex: 1,
@@ -81,12 +82,15 @@ export const styles = ReactNative.StyleSheet.create({
   resolvedContainer: {
     flex: 1,
     marginHorizontal: 40,
+    backgroundColor: 'transparent',
+    marginTop: Constants.statusBarHeight,
   },
   tab: {
     alignItems: 'center',
     justifyContent: 'center'
   },
   title: {
+    flex: 1,
     fontSize: 30,
     fontWeight: 'bold',
     fontFamily: 'Ubuntu_400Regular',
@@ -94,7 +98,7 @@ export const styles = ReactNative.StyleSheet.create({
     marginTop: 20,
     marginBottom: 30,
     marginHorizontal: 40,
-    color: '#e6c422'
+    color: '#fff'
   },
   legend: {
     fontSize: 25,
@@ -104,11 +108,6 @@ export const styles = ReactNative.StyleSheet.create({
     marginTop: 25,
     marginBottom: 10,
     color: '#cccccc'
-  },
-  separator: {
-    marginVertical: 10,
-    height: 1,
-    width: '100%',
   },
   button: {
     marginVertical: 40,
@@ -142,11 +141,15 @@ export const styles = ReactNative.StyleSheet.create({
     marginVertical: 10,
     backgroundColor: 'transparent'
   },
+  options3: {
+    flex: 1,
+    backgroundColor: 'transparent'
+  },
   document: {
     marginHorizontal: 150,
   },
   documentLegend: {
-    fontSize: 20,
+    fontSize: 25,
     fontFamily: 'Ubuntu_400Regular',
     fontWeight: '700',
     marginTop: 25,
@@ -156,9 +159,10 @@ export const styles = ReactNative.StyleSheet.create({
   documentItem: {
     fontSize: 20,
     fontFamily: 'Ubuntu_400Regular',
-    color: '#e6c422',
+    color: '#cccccc',
   },
   documentDescription: {
+    marginHorizontal: 60,
     fontSize: 20,
     fontFamily: 'Ubuntu_400Regular',
     color: '#fff',

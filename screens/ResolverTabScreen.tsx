@@ -149,7 +149,7 @@ export default class Resolver extends React.Component {
     );
   }
 
-  public static ResolvedScreen({ navigation, route }: Resolved) {
+  public static ResolvedScreen({ route }: Resolved) {
     const USERNAME = route.params.paramA;
     const DID_RESOLVED = route.params.paramB;
 
@@ -191,7 +191,7 @@ export default class Resolver extends React.Component {
       let SERVICES = [];
       for(let service of DID_DOCUMENT.service) {
         const HASH_INDEX = service.id.lastIndexOf("#");
-        const ID = service.id.substring(HASH_INDEX+1)+': ';
+        const ID = service.id.substring(HASH_INDEX+1);
         SERVICES.push([
           <ReactNative.Text style={Themed.styles.documentItem}>{ID}: </ReactNative.Text>, service.endpoint
         ])
@@ -204,7 +204,7 @@ export default class Resolver extends React.Component {
       INFO.push([
         <ReactNative.Text style={Themed.styles.documentItem}>DS block number: </ReactNative.Text>, ds_epoch
       ]);
-      const sharding = RESOLUTION_METADATA.result.ShardingStructure.NumPeers;
+      const sharding = JSON.stringify(RESOLUTION_METADATA.result.ShardingStructure.NumPeers, null);
       INFO.push([
         <ReactNative.Text style={Themed.styles.documentItem}>Blockchain sharding structure: </ReactNative.Text>, sharding
       ]);
@@ -226,28 +226,32 @@ export default class Resolver extends React.Component {
     }
 
     return (
-      <Themed.View style={Themed.styles.resolvedContainer}>
-        <ReactNative.ScrollView>
-          <Themed.Text style={Themed.styles.title}>
-            of {USERNAME}:
-          </Themed.Text>
-          <Themed.View>
-          { RESULT.map((res: any) => {
-            return(
-              <ReactNative.View key={res} style={Themed.styles.document}>
-                <ReactNative.Text style={Themed.styles.documentLegend}>{res[0]}</ReactNative.Text>
-                { res[1].map((element: any) => {
-                    return(
-                      <ReactNative.Text style={Themed.styles.documentDescription}>{element}</ReactNative.Text>
-                    );
-                  })}
-                <Themed.View style={Themed.styles.separator} lightColor="#e6c422" darkColor="#008080" />
-              </ReactNative.View>
-            );
-          })}
-          </Themed.View> 
-      </ReactNative.ScrollView>
-      </Themed.View>
+      <ReactNative.ImageBackground
+        source={Themed.didNet}
+        style={Themed.styles.image}
+      >
+        <Themed.View style={Themed.styles.resolvedContainer}>
+          <ReactNative.ScrollView>
+            <Themed.Text style={Themed.styles.title}>
+              of {USERNAME}:
+            </Themed.Text>
+            <Themed.View style={Themed.styles.options3}>
+            { RESULT.map((res: any) => {
+              return(
+                <ReactNative.View key={res} style={Themed.styles.document}>
+                  <ReactNative.Text style={Themed.styles.documentLegend}>{res[0]}</ReactNative.Text>
+                  { res[1].map((element: any) => {
+                      return(
+                        <ReactNative.Text style={Themed.styles.documentDescription}>{element}</ReactNative.Text>
+                      );
+                    })}
+                </ReactNative.View>
+              );
+            })}
+            </Themed.View> 
+        </ReactNative.ScrollView>
+        </Themed.View>
+      </ReactNative.ImageBackground>
     );
   }
   
@@ -258,7 +262,7 @@ function Submit({ title, onSubmission, state }: { title: any, onSubmission: any,
     <Themed.Text style={Themed.styles.buttonText}>{title}</Themed.Text>
     {
       state.loading &&
-      <ReactNative.ActivityIndicator size="large" color="#000000" />
+      <ReactNative.ActivityIndicator size="large" color="#000" />
     }
   </ReactNative.TouchableOpacity>
 }
